@@ -27,48 +27,45 @@
         }
 
         /* ==========================================================================
-           2. ①⑥ 三の字・×ボタンの配置設定（ヘッダー帯は削除）
+           2. ③ハンバーガーボタン（崩れ対策・完全修復版）
            ========================================================================== */
         .menu-btn {
             position: fixed;
-            top: 30px;
+            top: 25px;
             right: 5%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             width: 30px;
-            height: 18px;
+            height: 20px; /* 高さを少し広げて線の間隔を安定化 */
             background: transparent;
             border: none;
             cursor: pointer;
-            z-index: 2000; /* 何があっても一番上に表示 */
+            z-index: 2000;
+            padding: 0;
         }
 
-        /* ① ボタンの線を「白」に指定 */
+        /* ボタンの3本の線 */
         .menu-btn span {
             width: 100%;
             height: 2px;
             background-color: #ffffff; 
-            transition: all 0.4s ease;
-            transform-origin: left center;
+            transition: all 0.3s ease-in-out;
+            filter: drop-shadow(0px 1px 3px rgba(0,0,0,0.4));
+            display: block;
         }
 
-        /* ボタンの視認性を高めるため、線にうっすら影をつける */
-        .menu-btn span {
-            filter: drop-shadow(0px 1px 3px rgba(0,0,0,0.3));
-        }
-
-        /* ⑥ 開いた（open）ときの滑らかな「×」への変形（最前面で白を維持） */
+        /* ③ クリックされてメニューが開いた（open）ときの「×」アニメーション設定 */
         .menu-btn.open span:nth-child(1) {
-            transform: rotate(45deg) translate(2px, -1px);
+            transform: translateY(9px) rotate(45deg);
             background-color: #ffffff;
         }
         .menu-btn.open span:nth-child(2) {
-            width: 0%;
             opacity: 0;
+            width: 0;
         }
         .menu-btn.open span:nth-child(3) {
-            transform: rotate(-45deg) translate(2px, 1px);
+            transform: translateY(-9px) rotate(-45deg);
             background-color: #ffffff;
         }
 
@@ -112,14 +109,14 @@
         }
 
         /* ==========================================================================
-           3. ②③ TOPメインビジュアル（ヘッダーなし・最初からコーギー画像表示）
+           3. ⑤ TOPメインビジュアル（写真スライドショー）
            ========================================================================== */
         #top-slider {
             position: relative;
-            height: 100vh;
+            height: 100vh; /* PCでは画面いっぱいの高さ */
             width: 100%;
             overflow: hidden;
-            background-color: #111; /* 読み込み一瞬の隙間用 */
+            background-color: #111;
         }
 
         .slide-wrap {
@@ -140,16 +137,15 @@
             transition: opacity 1.5s ease-in-out;
         }
 
-        /* ② 1枚目を即座に表示させるための初期クラス */
         .slide-img.active {
             opacity: 1;
         }
 
         /* ==========================================================================
-           4. タイトルセクション（写真の直後に表示）
+           4. タイトルセクション
            ========================================================================== */
         #main-title-area {
-            padding: 140px 5% 90px 5%;
+            padding: 120px 5% 80px 5%;
             text-align: center;
             background-color: #ffffff;
         }
@@ -171,12 +167,13 @@
         }
 
         /* ==========================================================================
-           5. 各セクション共通（ふわっとアニメーション ＆ 2分割レイアウト）
+           5. ④ 各セクション共通（ふわっとアニメーション ＆ PC用2分割）
            ========================================================================== */
         section {
-            padding: 120px 0;
+            padding: 100px 0;
         }
 
+        /* ④ 全てのセクションをふわっと出すための初期設定 */
         .fade-in-up {
             opacity: 0;
             transform: translateY(40px);
@@ -188,7 +185,7 @@
             transform: translateY(0);
         }
 
-        /* 左右2分割コンポーネント */
+        /* 【PC用】左右2分割レイアウトのベース構造 */
         .split-container {
             display: flex;
             align-items: center;
@@ -199,6 +196,7 @@
             gap: 8%;
         }
 
+        /* 【PC用】2つ目のセクションは左右反転（交互配置） */
         .split-container.reverse {
             flex-direction: row-reverse;
         }
@@ -244,7 +242,7 @@
             line-height: 2.2;
         }
 
-        /* 通常セクション用（1カラム） */
+        /* 1カラム用通常コンレテア */
         .normal-container {
             max-width: 1100px;
             margin: 0 auto;
@@ -262,110 +260,45 @@
 
         .bg-white { background-color: #ffffff; }
 
-        /* ==========================================================================
-           6. お知らせ（TOPICS）
-           ========================================================================== */
-        .topics-list {
-            text-align: left;
-            margin: 0 auto;
-            max-width: 750px;
-        }
+        /* お知らせ一覧 */
+        .topics-list { text-align: left; margin: 0 auto; max-width: 750px; }
+        .topics-item { display: flex; padding: 22px 10px; border-bottom: 1px solid #edf2f7; font-size: 15px; }
+        .topics-date { width: 130px; color: #0066cc; font-weight: bold; }
+        .topics-text { flex: 1; color: #444; }
 
-        .topics-item {
-            display: flex;
-            padding: 22px 10px;
-            border-bottom: 1px solid #edf2f7;
-            font-size: 15px;
-        }
-
-        .topics-date {
-            width: 130px;
-            color: #0066cc;
-            font-weight: bold;
-        }
-
-        .topics-text {
-            flex: 1;
-            color: #444;
-        }
-
-        /* ==========================================================================
-           7. ④ アクセス（画面いっぱいの地図 ＋ 重なる半透明のおしゃれボード）
-           ========================================================================== */
+        /* アクセス（全面地図 ＋ 重なる案内板） */
         #access {
             position: relative;
-            padding: 0; /* 地図を上下左右いっぱいに広げるためpaddingをリセット */
+            padding: 0;
             width: 100%;
-            height: 600px;
+            height: 550px;
             display: flex;
             align-items: center;
-            justify-content: flex-start; /* 左側にボードを寄せる */
+            justify-content: flex-start;
         }
 
-        /* 背景に敷き詰めるマップ */
-        .map-fullscreen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
-        /* ④ 地図の上に重ねる白の半透明ボード（すりガラス効果入り） */
+        .map-fullscreen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
         .access-overlay-board {
             position: relative;
             z-index: 10;
-            background-color: rgba(255, 255, 255, 0.88); /* 白で透明度を調整 */
-            backdrop-filter: blur(6px); /* トレンドのすりガラス効果 */
-            padding: 50px 40px;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(6px);
+            padding: 45px 40px;
             width: 90%;
-            max-width: 450px;
-            margin-left: 8%; /* 左端から少し離す */
+            max-width: 430px;
+            margin-left: 8%;
             border-radius: 6px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
+        .access-overlay-board h3 { color: #0066cc; font-size: 20px; margin-bottom: 20px; font-weight: 500; }
+        .access-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .access-table th { padding: 10px 0; color: #0066cc; width: 25%; font-size: 14px; vertical-align: top; }
+        .access-table td { padding: 10px 0; font-size: 14px; color: #444; }
 
-        .access-overlay-board h3 {
-            color: #0066cc;
-            font-size: 22px;
-            margin-bottom: 25px;
-            font-weight: 500;
-            letter-spacing: 0.05em;
-        }
-
-        .access-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-        .access-table th {
-            padding: 12px 0;
-            color: #0066cc;
-            width: 25%;
-            font-size: 14px;
-            vertical-align: top;
-        }
-
-        .access-table td {
-            padding: 12px 0;
-            font-size: 14px;
-            color: #444;
-        }
-
-        /* スマホ用：画面が狭いときは中央寄せにする調整 */
-        @media (max-width: 768px) {
-            #access { justify-content: center; }
-            .access-overlay-board { margin-left: 0; }
-        }
-
-        /* ==========================================================================
-           8. ⑤ お問い合わせ（3つの項目を綺麗な1列に並べる）
-           ========================================================================== */
+        /* お問い合わせ（3列並び） */
         .contact-trigger-container {
             display: flex;
-            justify-content: space-between; /* 5列等間隔に美しく並べる */
+            justify-content: space-between;
             gap: 25px;
             width: 100%;
             max-width: 1000px;
@@ -377,7 +310,7 @@
             border: 1px solid #e2e8f0;
             border-radius: 6px;
             padding: 45px 25px;
-            flex: 1; /* ⑤ 3つの要素を全く同じ幅にして1列に引き伸ばす */
+            flex: 1;
             min-width: 250px;
             text-align: center;
             text-decoration: none;
@@ -392,41 +325,92 @@
             box-shadow: 0 12px 25px rgba(0,102,204,0.08);
         }
 
-        .contact-icon-text {
-            font-size: 32px;
-            margin-bottom: 15px;
-            display: block;
-        }
+        .contact-icon-text { font-size: 32px; margin-bottom: 15px; display: block; }
+        .contact-box-title { font-size: 18px; font-weight: bold; color: #0066cc; margin-bottom: 12px; }
+        .contact-box-desc { font-size: 13px; color: #666; line-height: 1.6; }
 
-        .contact-box-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #0066cc;
-            margin-bottom: 12px;
-        }
+        footer { background-color: #111; color: rgba(255,255,255,0.6); text-align: center; padding: 30px; font-size: 13px; }
 
-        .contact-box-desc {
-            font-size: 13px;
-            color: #666;
-            line-height: 1.6;
-        }
+        /* ==========================================================================
+           6. 📱 メディアクエリ（スマートフォン用のレスポンス強化設定）
+           ========================================================================== */
+        @media (max-width: 767px) {
+            
+            /* ①② スマホの時は、TOPの大きな写真を画面の「半分（50vh）」の高さに縮小 */
+            #top-slider {
+                height: 50vh; 
+            }
 
-        /* スマホなど画面が極端に狭い時だけ自動で縦並びにする親切設計 */
-        @media (max-width: 900px) {
+            /* ③ スマホ時は、写真の上の「三」アイコンの線を少し細くしてスタイリッシュにする調整 */
+            .menu-btn {
+                top: 20px;
+                right: 6%;
+            }
+            .menu-btn span {
+                background-color: #0066cc; /* スマホ写真が短くなるので、最初からボタンを青色にして見やすく */
+            }
+            .menu-btn.open span {
+                background-color: #ffffff; /* メニューが開いた時の×印は、白のまま維持 */
+            }
+
+            /* ② 写真が小さくなった分、店名タイトルエリアの上の余白を詰めてすぐ見えるように */
+            #main-title-area {
+                padding: 60px 5% 40px 5%;
+            }
+            .brand-title {
+                font-size: 28px; /* スマホ用に文字サイズを少しコンパクトに調整 */
+            }
+
+            /* ① 2分割レイアウトを、スマホでは「上が写真、下が文字」の縦1列に自動並び替え */
+            .split-container, 
+            .split-container.reverse {
+                flex-direction: column; /* 縦並びにする魔法の指示 */
+                gap: 20px;
+                padding: 0 6%;
+            }
+
+            /* 縦並びにしたので、左右ブロックの横幅を100%に広げる */
+            .split-block {
+                width: 100%;
+            }
+
+            /* スマホでの写真の高さを、画面に合わせて少し低め（300px）に調整 */
+            .split-img {
+                height: 300px;
+            }
+
+            /* 縦並びにしたので、テキストを中央寄せにして読みやすくする調整 */
+            .split-text-box {
+                padding: 10px 0 40px 0;
+                text-align: center;
+            }
+
+            /* ④ 通常セクションの上下の余白も、スマホ向けに少しキュッと引き締める */
+            section {
+                padding: 60px 0;
+            }
+
+            /* アクセス：スマホでは透明ボードを地図の真ん中に配置 */
+            #access {
+                justify-content: center;
+                height: 500px;
+            }
+            .access-overlay-board {
+                margin-left: 0;
+                padding: 30px 25px;
+            }
+
+            /* ⑤ お問い合わせ：3つのカードを綺麗に縦1列に並べる調整 */
             .contact-trigger-container {
                 flex-direction: column;
                 align-items: center;
+                gap: 20px;
             }
-            .contact-box-link { width: 100%; max-width: 400px; }
-        }
-
-        footer {
-            background-color: #111;
-            color: rgba(255,255,255,0.6);
-            text-align: center;
-            padding: 30px;
-            font-size: 13px;
-            letter-spacing: 0.05em;
+            .contact-box-link {
+                width: 100%;
+                max-width: 360px;
+                padding: 35px 20px;
+            }
         }
     </style>
 </head>
@@ -442,7 +426,7 @@
         <ul>
             <li><a href="#top-slider" class="menu-link">TOP</a></li>
             <li><a href="#about" class="menu-link">お店について</a></li>
-            <li><a href="#dogs" class="menu-link">看板犬のごご紹介</a></li>
+            <li><a href="#dogs" class="menu-link">看板犬のご紹介</a></li>
             <li><a href="#topics" class="menu-link">お知らせ</a></li>
             <li><a href="#access" class="menu-link">アクセス</a></li>
             <li><a href="#contact-hub" class="menu-link">お問い合わせ</a></li>
@@ -452,9 +436,9 @@
     <main>
         <div id="top-slider">
             <div class="slide-wrap">
-                <div class="slide-img active" style="background-image: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url('https://images.unsplash.com/photo-1612536057832-2ff7eed5f37e?auto=format&fit=crop&w=1920&q=80');"></div>
-                <div class="slide-img" style="background-image: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url('https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=1920&q=80');"></div>
-                <div class="slide-img" style="background-image: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url('https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=1920&q=80');"></div>
+                <div class="slide-img active" style="background-image: url('https://images.unsplash.com/photo-1612536057832-2ff7eed5f37e?auto=format&fit=crop&w=1920&q=80');"></div>
+                <div class="slide-img" style="background-image: url('https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=1920&q=80');"></div>
+                <div class="slide-img" style="background-image: url('https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=1920&q=80');"></div>
             </div>
         </div>
 
@@ -465,6 +449,9 @@
 
         <section id="about" class="fade-in-up">
             <div class="split-container">
+                <div class="split-block">
+                    <div class="split-img" style="background-image: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=800&q=80');"></div>
+                </div>
                 <div class="split-block split-text-box">
                     <span class="split-label">ABOUT US</span>
                     <h2 class="split-heading">海風を感じる開放的な空間</h2>
@@ -472,23 +459,20 @@
                         こだわりの自家焙煎コーヒーや、ワンちゃんも安心してお召し上がりいただける無添加のスペシャルメニュー（コーギー特製パンケーキなど）をご用意しております。全面ガラス張りのテラス席からは、時間ごとに表情を変える美しい海が一望でき、愛犬との特別な絆をさらに深めるリラックス空間を提供いたします。
                     </p>
                 </div>
-                <div class="split-block">
-                    <div class="split-img" style="background-image: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=800&q=80');"></div>
-                </div>
             </div>
         </section>
 
         <section id="dogs" class="bg-white fade-in-up">
             <div class="split-container reverse">
+                <div class="split-block">
+                    <div class="split-img" style="background-image: url('https://images.unsplash.com/photo-1629740067905-bd3f515aa739?auto=format&fit=crop&w=800&q=80');"></div>
+                </div>
                 <div class="split-block split-text-box">
                     <span class="split-label">OUR DOGS</span>
                     <h2 class="split-heading">エース看板犬「すずひこ」</h2>
                     <p class="split-desc">
                         食いしん坊でとっても甘えん坊なコーギーの男の子。お気に入りのおもちゃを見つけると、あっという間にブンブン振り回して遊ぶ元気いっぱいな一面も。お店のオープンからラストまで、いつも皆さまをモフモフの笑顔とお尻でお迎えする、当店の頼れる癒やし隊長です。
                     </p>
-                </div>
-                <div class="split-block">
-                    <div class="split-img" style="background-image: url('https://images.unsplash.com/photo-1629740067905-bd3f515aa739?auto=format&fit=crop&w=800&q=80');"></div>
                 </div>
             </div>
         </section>
@@ -556,26 +540,25 @@
     </footer>
 
     <script>
-        // ② 5秒おきの自動スライドショー（フェード）
+        // ② 5秒おきの自動スライドショー
         const slides = document.querySelectorAll('.slide-img');
         let currentSlide = 0;
         setInterval(() => {
             slides[currentSlide].classList.remove('active');
             currentSlide = (currentSlide + 1) % slides.length;
             slides[currentSlide].classList.add('active');
-        }, 5000); // 5秒おきにじんわり変更
+        }, 5000);
 
-        // ①⑥ ハンバーガーメニューの開閉 ＆ 三 ⇄ × の完全連動
+        // ③⑥ ハンバーガーメニューの開閉 ＆ 三 ⇄ × の完全連動
         const menuBtn = document.getElementById('menuBtn');
         const sideNav = document.getElementById('sideNav');
         const menuLinks = document.querySelectorAll('.menu-link');
 
         menuBtn.addEventListener('click', () => {
-            menuBtn.classList.toggle('open');  // 三 ⇄ × の切り替え
-            sideNav.classList.toggle('active'); // メニューバーの出し入れ
+            menuBtn.classList.toggle('open');
+            sideNav.classList.toggle('active');
         });
 
-        // メニューリンククリック時にバーを閉じる
         menuLinks.forEach(link => {
             link.addEventListener('click', () => {
                 menuBtn.classList.remove('open');
@@ -583,12 +566,12 @@
             });
         });
 
-        // スクロールでふわっと表示（Intersection Observer）
+        // ④ すべてのセクションをスクロールでふわっと表示（Intersection Observer）
         const fadeElements = document.querySelectorAll('.fade-in-up');
         const observerOptions = {
             root: null,
             threshold: 0.1,
-            rootMargin: "0px 0px -60px 0px"
+            rootMargin: "0px 0px -40px 0px"
         };
 
         const observer = new IntersectionObserver((entries, observer) => {
