@@ -17,7 +17,7 @@
 
         body {
             color: #333;
-            background-color: #fcfdfd; /* 少し温かみのある白 */
+            background-color: #fcfdfd;
             line-height: 1.8;
             overflow-x: hidden;
         }
@@ -27,23 +27,12 @@
         }
 
         /* ==========================================================================
-           2. 固定ヘッダー & ①ハンバーガーメニュー（三 ⇄ × 滑らかアニメーション）
+           2. ①⑥ 三の字・×ボタンの配置設定（ヘッダー帯は削除）
            ========================================================================== */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.9);
-            z-index: 1000;
-            display: flex;
-            justify-content: flex-end; /* 右端にボタンを配置 */
-            align-items: center;
-            padding: 20px 5%;
-        }
-
-        /* ハンバーガーボタン本体 */
         .menu-btn {
+            position: fixed;
+            top: 30px;
+            right: 5%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -52,33 +41,38 @@
             background: transparent;
             border: none;
             cursor: pointer;
-            z-index: 2000;
+            z-index: 2000; /* 何があっても一番上に表示 */
         }
 
-        /* 三の字の線の共通設定 */
+        /* ① ボタンの線を「白」に指定 */
         .menu-btn span {
             width: 100%;
             height: 2px;
-            background-color: #0066cc;
-            transition: all 0.4s ease; /* 滑らかに変更するためのアニメーション設定 */
+            background-color: #ffffff; 
+            transition: all 0.4s ease;
             transform-origin: left center;
         }
 
-        /* ① クリックされて「open」クラスがついた時の滑らかな「×」への変形 */
+        /* ボタンの視認性を高めるため、線にうっすら影をつける */
+        .menu-btn span {
+            filter: drop-shadow(0px 1px 3px rgba(0,0,0,0.3));
+        }
+
+        /* ⑥ 開いた（open）ときの滑らかな「×」への変形（最前面で白を維持） */
         .menu-btn.open span:nth-child(1) {
-            transform: rotate(45deg);
-            background-color: #ffffff; /* メニュー背景が青なので×は白にする */
+            transform: rotate(45deg) translate(2px, -1px);
+            background-color: #ffffff;
         }
         .menu-btn.open span:nth-child(2) {
             width: 0%;
             opacity: 0;
         }
         .menu-btn.open span:nth-child(3) {
-            transform: rotate(-45deg);
+            transform: rotate(-45deg) translate(2px, 1px);
             background-color: #ffffff;
         }
 
-        /* 右サイドのドロワーメニューバー */
+        /* 右サイドドロワーメニューバー */
         .side-nav {
             position: fixed;
             top: 0;
@@ -89,7 +83,7 @@
             padding: 120px 50px;
             box-shadow: -5px 0 15px rgba(0,0,0,0.1);
             z-index: 1500;
-            transition: right 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* 高級感のある滑らかな引き出し感 */
+            transition: right 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .side-nav.active {
@@ -118,13 +112,14 @@
         }
 
         /* ==========================================================================
-           3. ② TOPメインビジュアル（写真スライドのみ）
+           3. ②③ TOPメインビジュアル（ヘッダーなし・最初からコーギー画像表示）
            ========================================================================== */
         #top-slider {
             position: relative;
             height: 100vh;
             width: 100%;
             overflow: hidden;
+            background-color: #111; /* 読み込み一瞬の隙間用 */
         }
 
         .slide-wrap {
@@ -145,15 +140,16 @@
             transition: opacity 1.5s ease-in-out;
         }
 
+        /* ② 1枚目を即座に表示させるための初期クラス */
         .slide-img.active {
             opacity: 1;
         }
 
         /* ==========================================================================
-           4. ② タイトルセクション（写真の次に表示）
+           4. タイトルセクション（写真の直後に表示）
            ========================================================================== */
         #main-title-area {
-            padding: 120px 5% 80px 5%;
+            padding: 140px 5% 90px 5%;
             text-align: center;
             background-color: #ffffff;
         }
@@ -175,10 +171,10 @@
         }
 
         /* ==========================================================================
-           5. ③ 各セクション共通（ふわっとアニメーション ＆ 2分割レイアウト）
+           5. 各セクション共通（ふわっとアニメーション ＆ 2分割レイアウト）
            ========================================================================== */
         section {
-            padding: 100px 0;
+            padding: 120px 0;
         }
 
         .fade-in-up {
@@ -192,7 +188,7 @@
             transform: translateY(0);
         }
 
-        /* ⑤PonteNodo風：左右2分割のコンポーネント */
+        /* 左右2分割コンポーネント */
         .split-container {
             display: flex;
             align-items: center;
@@ -200,10 +196,9 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 5%;
-            gap: 5%;
+            gap: 8%;
         }
 
-        /* 偶数番目のセクションは左右を反転させて交互にする */
         .split-container.reverse {
             flex-direction: row-reverse;
         }
@@ -214,15 +209,15 @@
 
         .split-img {
             width: 100%;
-            height: 450px;
+            height: 480px;
             background-size: cover;
             background-position: center;
             border-radius: 4px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
         }
 
         .split-text-box {
-            padding: 40px;
+            padding: 20px 0;
             text-align: left;
         }
 
@@ -231,59 +226,60 @@
             color: #0066cc;
             letter-spacing: 0.2em;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             display: block;
         }
 
         .split-heading {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 400;
             margin-bottom: 25px;
             color: #111;
+            letter-spacing: 0.05em;
         }
 
         .split-desc {
             color: #555;
             font-size: 15px;
-            line-height: 2;
+            line-height: 2.2;
         }
 
-        /* 通常セクション（1カラム用） */
+        /* 通常セクション用（1カラム） */
         .normal-container {
-            max-width: 800px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 0 5%;
             text-align: center;
         }
 
         .center-title {
-            font-size: 24px;
+            font-size: 26px;
             color: #0066cc;
             font-weight: 400;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             letter-spacing: 0.1em;
         }
 
         .bg-white { background-color: #ffffff; }
 
         /* ==========================================================================
-           6. ③ お知らせ（TOPICS）
+           6. お知らせ（TOPICS）
            ========================================================================== */
         .topics-list {
             text-align: left;
             margin: 0 auto;
-            max-width: 700px;
+            max-width: 750px;
         }
 
         .topics-item {
             display: flex;
-            padding: 20px 10px;
+            padding: 22px 10px;
             border-bottom: 1px solid #edf2f7;
             font-size: 15px;
         }
 
         .topics-date {
-            width: 120px;
+            width: 130px;
             color: #0066cc;
             font-weight: bold;
         }
@@ -294,71 +290,106 @@
         }
 
         /* ==========================================================================
-           7. ③ アクセス
+           7. ④ アクセス（画面いっぱいの地図 ＋ 重なる半透明のおしゃれボード）
            ========================================================================== */
-        .access-grid {
+        #access {
+            position: relative;
+            padding: 0; /* 地図を上下左右いっぱいに広げるためpaddingをリセット */
+            width: 100%;
+            height: 600px;
             display: flex;
-            flex-direction: column;
-            gap: 30px;
             align-items: center;
+            justify-content: flex-start; /* 左側にボードを寄せる */
+        }
+
+        /* 背景に敷き詰めるマップ */
+        .map-fullscreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* ④ 地図の上に重ねる白の半透明ボード（すりガラス効果入り） */
+        .access-overlay-board {
+            position: relative;
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.88); /* 白で透明度を調整 */
+            backdrop-filter: blur(6px); /* トレンドのすりガラス効果 */
+            padding: 50px 40px;
+            width: 90%;
+            max-width: 450px;
+            margin-left: 8%; /* 左端から少し離す */
+            border-radius: 6px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .access-overlay-board h3 {
+            color: #0066cc;
+            font-size: 22px;
+            margin-bottom: 25px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
         }
 
         .access-table {
             width: 100%;
-            max-width: 600px;
             border-collapse: collapse;
             text-align: left;
         }
 
         .access-table th {
-            padding: 15px;
+            padding: 12px 0;
             color: #0066cc;
             width: 25%;
-            border-bottom: 1px solid #edf2f7;
+            font-size: 14px;
+            vertical-align: top;
         }
 
         .access-table td {
-            padding: 15px;
-            border-bottom: 1px solid #edf2f7;
+            padding: 12px 0;
+            font-size: 14px;
+            color: #444;
         }
 
-        .map-frame {
-            width: 100%;
-            max-width: 800px;
-            height: 400px;
-            border-radius: 4px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        /* スマホ用：画面が狭いときは中央寄せにする調整 */
+        @media (max-width: 768px) {
+            #access { justify-content: center; }
+            .access-overlay-board { margin-left: 0; }
         }
 
         /* ==========================================================================
-           8. ④ お問い合わせセクション（3分割ナビゲーション）
+           8. ⑤ お問い合わせ（3つの項目を綺麗な1列に並べる）
            ========================================================================== */
         .contact-trigger-container {
             display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin-top: 20px;
+            justify-content: space-between; /* 5列等間隔に美しく並べる */
+            gap: 25px;
+            width: 100%;
+            max-width: 1000px;
+            margin: 20px auto 0 auto;
         }
 
         .contact-box-link {
             background: #ffffff;
             border: 1px solid #e2e8f0;
             border-radius: 6px;
-            padding: 40px 30px;
-            width: 280px;
+            padding: 45px 25px;
+            flex: 1; /* ⑤ 3つの要素を全く同じ幅にして1列に引き伸ばす */
+            min-width: 250px;
             text-align: center;
             text-decoration: none;
             color: #333;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.01);
             transition: all 0.3s ease;
         }
 
         .contact-box-link:hover {
             transform: translateY(-5px);
             border-color: #0066cc;
-            box-shadow: 0 10px 20px rgba(0,102,204,0.08);
+            box-shadow: 0 12px 25px rgba(0,102,204,0.08);
         }
 
         .contact-icon-text {
@@ -371,13 +402,22 @@
             font-size: 18px;
             font-weight: bold;
             color: #0066cc;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .contact-box-desc {
             font-size: 13px;
             color: #666;
             line-height: 1.6;
+        }
+
+        /* スマホなど画面が極端に狭い時だけ自動で縦並びにする親切設計 */
+        @media (max-width: 900px) {
+            .contact-trigger-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .contact-box-link { width: 100%; max-width: 400px; }
         }
 
         footer {
@@ -392,21 +432,17 @@
 </head>
 <body>
 
-    <!-- ヘッダー & ①「三」ハンバーガーボタン -->
-    <header>
-        <button class="menu-btn" id="menuBtn">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </header>
+    <button class="menu-btn" id="menuBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
 
-    <!-- 右サイドドロワーメニュー（④⑤指定の並び順） -->
     <nav class="side-nav" id="sideNav">
         <ul>
             <li><a href="#top-slider" class="menu-link">TOP</a></li>
             <li><a href="#about" class="menu-link">お店について</a></li>
-            <li><a href="#dogs" class="menu-link">看板犬のご紹介</a></li>
+            <li><a href="#dogs" class="menu-link">看板犬のごご紹介</a></li>
             <li><a href="#topics" class="menu-link">お知らせ</a></li>
             <li><a href="#access" class="menu-link">アクセス</a></li>
             <li><a href="#contact-hub" class="menu-link">お問い合わせ</a></li>
@@ -414,113 +450,101 @@
     </nav>
 
     <main>
-        <!-- ③ TOPの写真（スライド表示のみ） -->
         <div id="top-slider">
             <div class="slide-wrap">
-                <div class="slide-img active" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('https://images.unsplash.com/photo-1612536057832-2ff7eed5f37e?auto=format&fit=crop&w=1920&q=80');"></div>
-                <div class="slide-img" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80');"></div>
-                <div class="slide-img" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=1920&q=80');"></div>
+                <div class="slide-img active" style="background-image: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url('https://images.unsplash.com/photo-1612536057832-2ff7eed5f37e?auto=format&fit=crop&w=1920&q=80');"></div>
+                <div class="slide-img" style="background-image: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url('https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=1920&q=80');"></div>
+                <div class="slide-img" style="background-image: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), url('https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=1920&q=80');"></div>
             </div>
         </div>
 
-        <!-- ② タイトル（写真の次に単体で表示。アイコンは削除） -->
         <div id="main-title-area">
             <h1 class="brand-title">Dog Cafe ｜With Corgi</h1>
             <p class="brand-subtitle">穏やかな波の音を聴きながら、大切な愛犬と一緒に過ごす極上のひととき。美しい海岸線に佇む、コーギーたちが主役ののんびり心地よいドッグカフェです。</p>
         </div>
 
-        <!-- ③ お店についての紹介（2分割表示・テキスト左／写真右） -->
         <section id="about" class="fade-in-up">
             <div class="split-container">
                 <div class="split-block split-text-box">
                     <span class="split-label">ABOUT US</span>
                     <h2 class="split-heading">海風を感じる開放的な空間</h2>
                     <p class="split-desc">
-                        こだわりのコーヒーや、ワンちゃんも安心してお召し上がりいただける自家製のスペシャルメニュー（コーギー・パンケーキなど）をご用意しております。全面ガラス張りの店内からは時間ごとに表情を変える美しい海が一望でき、日常の忙しさを忘れてゆったりと流れる時間をお楽しみいただけます。
+                        こだわりの自家焙煎コーヒーや、ワンちゃんも安心してお召し上がりいただける無添加のスペシャルメニュー（コーギー特製パンケーキなど）をご用意しております。全面ガラス張りのテラス席からは、時間ごとに表情を変える美しい海が一望でき、愛犬との特別な絆をさらに深めるリラックス空間を提供いたします。
                     </p>
                 </div>
                 <div class="split-block">
-                    <div class="split-img" style="background-image: url('https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="split-img" style="background-image: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=800&q=80');"></div>
                 </div>
             </div>
         </section>
 
-        <!-- ③ 看板犬の紹介（2分割表示・写真左／テキスト右：reverseクラスを適用） -->
         <section id="dogs" class="bg-white fade-in-up">
             <div class="split-container reverse">
                 <div class="split-block split-text-box">
                     <span class="split-label">OUR DOGS</span>
                     <h2 class="split-heading">エース看板犬「すずひこ」</h2>
                     <p class="split-desc">
-                        食いしん坊でとっても甘えん坊なコーギーの男の子。お気に入りのおもちゃを見つけると、あっという間にブンブン振り回して遊ぶ元気いっぱいの男の子です。お店のオープンからラストまで、いつも皆さまをモフモフの笑顔でお迎えする癒やしの隊長です。
+                        食いしん坊でとっても甘えん坊なコーギーの男の子。お気に入りのおもちゃを見つけると、あっという間にブンブン振り回して遊ぶ元気いっぱいな一面も。お店のオープンからラストまで、いつも皆さまをモフモフの笑顔とお尻でお迎えする、当店の頼れる癒やし隊長です。
                     </p>
                 </div>
                 <div class="split-block">
-                    <div class="split-img" style="background-image: url('https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="split-img" style="background-image: url('https://images.unsplash.com/photo-1629740067905-bd3f515aa739?auto=format&fit=crop&w=800&q=80');"></div>
                 </div>
             </div>
         </section>
 
-        <!-- ③ お知らせ（TOPICS） -->
         <section id="topics" class="fade-in-up">
             <div class="normal-container">
                 <h2 class="center-title">お知らせ</h2>
                 <div class="topics-list">
                     <div class="topics-item">
                         <span class="topics-date">2026.06.19</span>
-                        <span class="topics-text">本日限定！特別なアニバーサリーおやつセットを数量限定で配布中です 🌸</span>
+                        <span class="topics-text">本日限定！特別なアニバーサリーおやつセットを数量限定でプレゼント中です 🌸</span>
                     </div>
                     <div class="topics-item">
                         <span class="topics-date">2026.06.01</span>
-                        <span class="topics-text">夏に向けた新しい冷製ドリンクメニューがスタートいたしました。</span>
+                        <span class="topics-text">夏に向けた、愛犬と一緒に楽しむ冷製フルーツドリンクメニューがスタートしました。</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ③ アクセス -->
         <section id="access" class="bg-white fade-in-up">
-            <div class="normal-container">
-                <h2 class="center-title">アクセス</h2>
-                <div class="access-grid">
-                    <table class="access-table">
-                        <tr><th>住所</th><td>兵庫県神戸市中央区 海岸通 1-1-1</td></tr>
-                        <tr><th>営業時間</th><td>10:00 〜 18:00</td></tr>
-                        <tr><th>定休日</th><td>毎週木曜日（祝日の場合は翌金曜日）</td></tr>
-                    </table>
-                    <div class="map-frame">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3281.0423026771124!2d135.1925!3d34.685!2m3!1f0!2f0!3f0!3m2!1i1024!2i1024!4f13.1!3m3!1m2!1s0x60008eed30b42c4b%3A0x633513a96871a255!2sKobe!5e0!3m2!1sen!2sjp!4v1650000000000!5m2!1sen!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                    </div>
-                </div>
+            <div class="map-fullscreen">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3281.0423026771124!2d135.1925!3d34.685!2m3!1f0!2f0!3f0!3m2!1i1024!2i1024!4f13.1!3m3!1m2!1s0x60008eed30b42c4b%3A0x633513a96871a255!2sKobe!5e0!3m2!1sen!2sjp!4v1650000000000!5m2!1sen!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div class="access-overlay-board">
+                <h3>ACCESS INFO</h3>
+                <table class="access-table">
+                    <tr><th>住所</th><td>兵庫県神戸市中央区 海岸通 1-1-1<br><span style="font-size:12px; color:#888;">(海岸口より徒歩3分)</span></td></tr>
+                    <tr><th>営業時間</th><td>10:00 〜 18:00</td></tr>
+                    <tr><th>定休日</th><td>毎週木曜日</td></tr>
+                </table>
             </div>
         </section>
 
-        <!-- ③④ お問い合わせ（3つの窓口にリンクを繋ぐハブエリア） -->
         <section id="contact-hub" class="fade-in-up">
             <div class="normal-container">
                 <h2 class="center-title">お問い合わせ</h2>
-                <p style="color: #666; font-size: 14px; margin-bottom: 40px;">ご質問や日々のコーギーたちの様子は、以下の各窓口からご確認・ご連絡ください。</p>
+                <p style="color: #666; font-size: 14px; margin-bottom: 50px;">ご質問や日々のコーギーたちの様子は、以下の各窓口からお気軽にご連絡ください。</p>
                 
                 <div class="contact-trigger-container">
-                    <!-- ① Instagramリンク -->
                     <a href="https://instagram.com" target="_blank" class="contact-box-link">
                         <span class="contact-icon-text">📸</span>
                         <p class="contact-box-title">Instagram</p>
-                        <p class="contact-box-desc">日々の可愛い写真や、お店のリアルタイムな空席情報を発信しています。</p>
+                        <p class="contact-box-desc">日々の可愛いすずひこの日常写真や、お店のリアルタイムな空席情報を発信しています。</p>
                     </a>
 
-                    <!-- ② メールフォーム（クリックするとダミーのアラートが動きます） -->
                     <a href="javascript:void(0);" onclick="alert('メールフォーム画面へ遷移します（デモ動作です）')" class="contact-box-link">
                         <span class="contact-icon-text">✉️</span>
                         <p class="contact-box-title">メールフォーム</p>
-                        <p class="contact-box-desc">ご予約のご相談や、イベント・取材等に関するお仕事のご連絡はこちらから。</p>
+                        <p class="contact-box-desc">ご予約のご相談や、イベント・貸切等に関するご連絡はこちらの専用フォームから。</p>
                     </a>
 
-                    <!-- ③ Q&A（ページ内のQ&A特設へ遷移、またはよくある質問へのリンクを想定） -->
                     <a href="javascript:void(0);" onclick="alert('よくある質問（Q&A）の専用ページへ遷移します（デモ動作です）')" class="contact-box-link">
                         <span class="contact-icon-text">❓</span>
                         <p class="contact-box-title">Q&A</p>
-                        <p class="contact-box-desc">皆さまからよくいただくご質問（犬同伴のルール、駐車場など）をまとめています。</p>
+                        <p class="contact-box-desc">皆さまからよくいただくご質問（ワンちゃん同伴のルール、駐車場、お誕生日特典など）を掲載しています。</p>
                     </a>
                 </div>
             </div>
@@ -528,33 +552,30 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 Dog Cafe | With Corgi. All Rights Reserved.</p>
+        <p>© 2026 Dog Cafe | With Corgi. All Rights Reserved.</p>
     </footer>
 
-    <!-- ==========================================================================
-           9. JavaScript（動きのギミック）
-           ========================================================================== -->
     <script>
-        // 8秒おきの自動スライドショー
+        // ② 5秒おきの自動スライドショー（フェード）
         const slides = document.querySelectorAll('.slide-img');
         let currentSlide = 0;
         setInterval(() => {
             slides[currentSlide].classList.remove('active');
             currentSlide = (currentSlide + 1) % slides.length;
             slides[currentSlide].classList.add('active');
-        }, 8000);
+        }, 5000); // 5秒おきにじんわり変更
 
-        // ① ハンバーガーメニューの開閉 ＆ 三 ⇄ × の滑らかアニメーション
+        // ①⑥ ハンバーガーメニューの開閉 ＆ 三 ⇄ × の完全連動
         const menuBtn = document.getElementById('menuBtn');
         const sideNav = document.getElementById('sideNav');
         const menuLinks = document.querySelectorAll('.menu-link');
 
         menuBtn.addEventListener('click', () => {
-            menuBtn.classList.toggle('open');  // これで三の字が滑らかに×に変形します
-            sideNav.classList.toggle('active'); // これで右サイドバーが出現します
+            menuBtn.classList.toggle('open');  // 三 ⇄ × の切り替え
+            sideNav.classList.toggle('active'); // メニューバーの出し入れ
         });
 
-        // メニューリンククリック時に閉じる
+        // メニューリンククリック時にバーを閉じる
         menuLinks.forEach(link => {
             link.addEventListener('click', () => {
                 menuBtn.classList.remove('open');
