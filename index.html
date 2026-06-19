@@ -6,28 +6,28 @@
     <title>Dog Cafe Beach & Corgi</title>
     <style>
         /* ==========================================================================
-           1. 全体の共通設定（CSSベース）
+           1. 全体の共通設定とリセット
            ========================================================================== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
         }
 
         body {
             color: #333;
             background-color: #f7fafc;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* スムーズスクロール（メニューをクリックしたときに滑らかに動く） */
         html {
             scroll-behavior: smooth;
         }
 
         /* ==========================================================================
-           2. ヘッダー・ナビゲーション
+           2. 固定ヘッダー & ハンバーガーメニュー
            ========================================================================== */
         header {
             position: fixed;
@@ -35,7 +35,7 @@
             left: 0;
             width: 100%;
             background-color: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             z-index: 1000;
             display: flex;
             justify-content: space-between;
@@ -46,74 +46,156 @@
         .logo {
             font-size: 20px;
             font-weight: bold;
-            color: #0066cc; /* 青ベースのメインカラー */
+            color: #0066cc;
             text-decoration: none;
         }
 
-        nav ul {
+        /* 三の字アイコン（ハンバーガーボタン） */
+        .menu-btn {
             display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 2000; /* メニューが開いた時も上に表示 */
+        }
+
+        .menu-btn span {
+            width: 100%;
+            height: 3px;
+            background-color: #0066cc;
+            transition: all 0.3s ease;
+        }
+
+        /* ボタンがクリックされて×印になるときの変形 */
+        .menu-btn.open span:nth-child(1) {
+            transform: translateY(8.5px) rotate(45deg);
+        }
+        .menu-btn.open span:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-btn.open span:nth-child(3) {
+            transform: translateY(-8.5px) rotate(-45deg);
+        }
+
+        /* 右サイドから飛び出るメニュー一覧（ドロワー） */
+        .side-nav {
+            position: fixed;
+            top: 0;
+            right: -300px; /* 最初は画面の右外に隠す */
+            width: 300px;
+            height: 100vh;
+            background-color: rgba(0, 102, 204, 0.95);
+            padding: 100px 40px;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            z-index: 1500;
+            transition: right 0.4s ease;
+        }
+
+        /* クラス「active」がつくと右から出てくる */
+        .side-nav.active {
+            right: 0;
+        }
+
+        .side-nav ul {
             list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
         }
 
-        nav ul li {
-            margin-left: 20px;
-        }
-
-        nav ul li a {
+        .side-nav ul li a {
+            color: white;
             text-decoration: none;
-            color: #555;
+            font-size: 20px;
             font-weight: 500;
+            display: block;
             transition: color 0.3s;
         }
 
-        nav ul li a:hover {
-            color: #0066cc;
+        .side-nav ul li a:hover {
+            color: #ffe600; /* ホバーで可愛い黄色に */
         }
 
         /* ==========================================================================
-           3. TOPメインビジュアル（海沿いのコーギー）
+           3. TOPスライドショー（8秒おきフェード）
            ========================================================================== */
         #top {
+            position: relative;
             height: 100vh;
-            /* 海沿いを走るコーギー（イメージフリー素材） */
-            background-image: linear-gradient(rgba(0, 102, 204, 0.2), rgba(0, 102, 204, 0.2)), url('https://images.unsplash.com/photo-1612536057832-2ff7eed5f37e?auto=format&fit=crop&w=1920&q=80');
-            background-size: cover;
-            background-position: center;
+            width: 100%;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding-top: 60px;
         }
 
-        /* メッセージ表示部分（白色を少し透明化） */
+        .slide-wrap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .slide-img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out; /* 滑らかなフェード効果 */
+        }
+
+        /* 現在表示されている画像 */
+        .slide-img.active {
+            opacity: 1;
+        }
+
+        /* メッセージ表示部分（白色を透明化） */
         .top-message {
+            position: relative;
+            z-index: 10;
             background-color: rgba(255, 255, 255, 0.85);
             padding: 40px 60px;
             border-radius: 10px;
             text-align: center;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(5px); /* 背景を少しぼかすおしゃれエフェクト */
+            backdrop-filter: blur(5px);
             max-width: 600px;
             width: 90%;
         }
 
         .top-message h1 {
             color: #0066cc;
-            font-size: 32px;
+            font-size: 30px;
             margin-bottom: 15px;
         }
 
-        .top-message p {
-            font-size: 16px;
-            color: #444;
-        }
-
         /* ==========================================================================
-           4. 各セクションの共通スタイル
+           4. スクロールでふわっと出すための設定（アニメーション）
            ========================================================================== */
         section {
             padding: 100px 5% 80px 5%;
             text-align: center;
+        }
+
+        /* アニメーションさせたい全要素の初期状態（透明で少し下に配置） */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1.0s ease, transform 1.0s ease;
+        }
+
+        /* 画面に入った時にJavaScriptでこのクラスをつける */
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .section-title {
@@ -124,7 +206,6 @@
             display: inline-block;
         }
 
-        /* タイトルの下の青い線 */
         .section-title::after {
             content: '';
             position: absolute;
@@ -134,228 +215,165 @@
             width: 50px;
             height: 3px;
             background-color: #0066cc;
-            border-radius: 2px;
         }
 
-        /* 背景が白のセクション */
-        .bg-white {
-            background-color: #ffffff;
-        }
+        .bg-white { background-color: #ffffff; }
 
         /* ==========================================================================
-           5. MENU（メニュー）
+           5. 各カテゴリのレイアウト（デザインベース）
            ========================================================================== */
-        .menu-container {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+        /* お食事（MENU） */
+        .menu-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; max-width: 1000px; margin: 0 auto; }
+        .menu-item { background-color: #f7fafc; border-radius: 8px; overflow: hidden; width: 280px; box-shadow: 0 3px 6px rgba(0,0,0,0.05); }
+        .menu-img { width: 100%; height: 180px; background-size: cover; background-position: center; }
+        .menu-info { padding: 20px; text-align: left; }
+        .menu-name { font-weight: bold; font-size: 18px; }
+        .menu-price { color: #0066cc; font-weight: bold; }
 
-        .menu-item {
-            background-color: #f7fafc;
-            border-radius: 8px;
-            overflow: hidden;
-            width: 280px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
-        }
+        /* 看板犬 */
+        .dog-container { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; max-width: 800px; margin: 0 auto; }
+        .dog-card { background: white; padding: 30px; border-radius: 50% 50% 10px 10px; width: 260px; box-shadow: 0 4px 10px rgba(0,60,120,0.05); border: 1px solid #e2e8f0; }
+        .dog-avatar { width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 20px auto; background-size: cover; background-position: center; border: 4px solid #0066cc; }
 
-        .menu-item:hover {
-            transform: translateY(-5px);
-        }
+        /* アクセス */
+        .access-info { max-width: 600px; margin: 0 auto 30px auto; text-align: left; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .access-info table { width: 100%; }
+        .access-info th { padding: 10px; text-align: left; color: #0066cc; width: 30%; }
+        .access-info td { padding: 10px; }
+        .map-mock { width: 100%; max-width: 600px; height: 300px; margin: 0 auto; border-radius: 8px; overflow: hidden; }
 
-        .menu-img {
-            width: 100%;
-            height: 180px;
-            background-size: cover;
-            background-position: center;
-        }
+        /* Q&A */
+        .qa-container { max-width: 700px; margin: 0 auto; text-align: left; }
+        .qa-box { background: white; padding: 20px; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .qa-q { font-weight: bold; color: #0066cc; margin-bottom: 5px; }
+        .qa-a { color: #555; }
 
-        .menu-info {
-            padding: 20px;
-            text-align: left;
-        }
+        /* お問い合わせ */
+        .contact-form { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-align: left; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        .submit-btn { background: #0066cc; color: white; border: none; padding: 12px 30px; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; transition: background 0.3s; }
+        .submit-btn:hover { background: #004499; }
 
-        .menu-name {
-            font-weight: bold;
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-
-        .menu-price {
-            color: #0066cc;
-            font-weight: bold;
-        }
-
-        /* ==========================================================================
-           6. DOGS（看板犬のご紹介）
-           ========================================================================== */
-        .dog-container {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .dog-card {
-            background: white;
-            padding: 30px;
-            border-radius: 50% 50% 10px 10px; /* 上部を丸くして可愛い形に */
-            width: 260px;
-            box-shadow: 0 4px 10px rgba(0,60,120,0.05);
-            border: 1px solid #e2e8f0;
-        }
-
-        .dog-avatar {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin: 0 auto 20px auto;
-            background-size: cover;
-            background-position: center;
-            border: 4px solid #0066cc;
-        }
-
-        .dog-name {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .dog-text {
-            font-size: 14px;
-            color: #666;
-        }
-
-        /* ==========================================================================
-           7. ACCESS（アクセス）
-           ========================================================================== */
-        .access-info {
-            max-width: 600px;
-            margin: 0 auto 30px auto;
-            text-align: left;
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        .access-info table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .access-info th, .access-info td {
-            padding: 10px;
-            border-bottom: 1px solid #edf2f7;
-        }
-
-        .access-info th {
-            width: 30%;
-            text-align: left;
-            color: #0066cc;
-        }
-
-        .map-mock {
-            width: 100%;
-            max-width: 600px;
-            height: 300px;
-            margin: 0 auto;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        /* ==========================================================================
-           8. フッター
-           ========================================================================== */
-        footer {
-            background-color: #0066cc;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            font-size: 14px;
-        }
+        footer { background-color: #0066cc; color: white; text-align: center; padding: 20px; font-size: 14px; }
     </style>
 </head>
 <body>
 
+    <!-- ヘッダー & 三の字ハンバーガーボタン -->
     <header>
         <a href="#top" class="logo">🌊 Cafe Beach & Corgi</a>
-        <nav>
-            <ul>
-                <li><a href="#top">TOP</a></li>
-                <li><a href="#menu">MENU</a></li>
-                <li><a href="#dogs">DOGS</a></li>
-                <li><a href="#access">ACCESS</a></li>
-            </ul>
-        </nav>
+        <button class="menu-btn" id="menuBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </header>
 
+    <!-- 右サイドから飛び出るメニュー（指定の6順序） -->
+    <nav class="side-nav" id="sideNav">
+        <ul>
+            <li><a href="#top" class="menu-link">TOP</a></li>
+            <li><a href="#menu" class="menu-link">お食事</a></li>
+            <li><a href="#dogs" class="menu-link">看板犬</a></li>
+            <li><a href="#access" class="menu-link">アクセス</a></li>
+            <li><a href="#qa" class="menu-link">Q&A</a></li>
+            <li><a href="#contact" class="menu-link">お問い合わせ</a></li>
+        </ul>
+    </nav>
+
     <main>
+        <!-- ① TOPページスライドショー（海とコーギーの画像3枚が8秒おきにフェード） -->
         <section id="top">
+            <div class="slide-wrap">
+                <div class="slide-img active" style="background-image: linear-gradient(rgba(0,60,120,0.2), rgba(0,60,120,0.2)), url('https://images.unsplash.com/photo-1612536057832-2ff7eed5f37e?auto=format&fit=crop&w=1920&q=80');"></div>
+                <div class="slide-img" style="background-image: linear-gradient(rgba(0,60,120,0.2), rgba(0,60,120,0.2)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80');"></div>
+                <div class="slide-img" style="background-image: linear-gradient(rgba(0,60,120,0.2), rgba(0,60,120,0.2)), url('https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=1920&q=80');"></div>
+            </div>
             <div class="top-message">
                 <h1>海風を感じる、コーギーたちの隠れ家</h1>
-                <p>目の前に広がる青い海と、元気いっぱいの看板犬たちが皆さまをお出迎えします。愛犬と一緒に、特別でスマートなリラックスタイムを過ごしませんか？</p>
+                <p>目の前に広がる青い海と、元気いっぱいの看板犬たちが皆さまをお出迎えします。愛犬と一緒に特別な時間を過ごしませんか？</p>
             </div>
         </section>
 
-        <section id="menu" class="bg-white">
-            <h2 class="section-title">MENU</h2>
+        <!-- ③ スクロールでふわっと表示される各カテゴリ -->
+        <!-- お食事 -->
+        <section id="menu" class="bg-white fade-in-up">
+            <h2 class="section-title">お食事</h2>
             <div class="menu-container">
                 <div class="menu-item">
                     <div class="menu-img" style="background-image: url('https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=400&q=80');"></div>
-                    <div class="menu-info">
-                        <p class="menu-name">ビーチ・ラテ</p>
-                        <p class="menu-price">¥650</p>
-                    </div>
+                    <div class="menu-info"><p class="menu-name">ビーチ・ラテ</p><p class="menu-price">¥650</p></div>
                 </div>
                 <div class="menu-item">
                     <div class="menu-img" style="background-image: url('https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=400&q=80');"></div>
-                    <div class="menu-info">
-                        <p class="menu-name">コーギー・パンケーキ</p>
-                        <p class="menu-price">¥1,200</p>
-                    </div>
+                    <div class="menu-info"><p class="menu-name">コーギー・パンケーキ</p><p class="menu-price">¥1,200</p></div>
                 </div>
             </div>
         </section>
 
-        <section id="dogs">
-            <h2 class="section-title">DOGS</h2>
+        <!-- 看板犬 -->
+        <section id="dogs" class="fade-in-up">
+            <h2 class="section-title">看板犬のご紹介</h2>
             <div class="dog-container">
                 <div class="dog-card">
                     <div class="dog-avatar" style="background-image: url('https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=400&q=80');"></div>
                     <p class="dog-name">すずひこ</p>
-                    <p class="dog-text">食いしん坊で甘えん坊な男の子。おもちゃを壊すスピードはギルド級！お店のNO.1エースです。</p>
+                    <p class="dog-text">食いしん坊で甘えん坊なコーギーの男の子。おもちゃを壊すスピードは誰よりも爆速！お店の癒やし隊長です。</p>
                 </div>
             </div>
         </section>
 
-        <section id="access" class="bg-white">
-            <h2 class="section-title">ACCESS</h2>
+        <!-- アクセス -->
+        <section id="access" class="bg-white fade-in-up">
+            <h2 class="section-title">アクセス</h2>
             <div class="access-info">
                 <table>
-                    <tr>
-                        <th>住所</th>
-                        <td>兵庫県神戸市中央区 海岸通 1-1-1</td>
-                    </tr>
-                    <tr>
-                        <th>営業時間</th>
-                        <td>10:00 〜 18:00</td>
-                    </tr>
-                    <tr>
-                        <th>定休日</th>
-                        <td>毎週木曜日・第3水曜日</td>
-                    </tr>
+                    <tr><th>住所</th><td>兵庫県神戸市中央区 海岸通 1-1-1</td></tr>
+                    <tr><th>営業時間</th><td>10:00 〜 18:00</td></tr>
+                    <tr><th>定休日</th><td>毎週木曜日</td></tr>
                 </table>
             </div>
             <div class="map-mock">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3281.0423026771124!2d135.1925!3d34.685!2m3!1f0!2f0!3f0!3m2!1i1024!2i1024!4f13.1!3m3!1m2!1s0x60008eed30b42c4b%3A0x633513a96871a255!2sKobe!5e0!3m2!1sen!2sjp!4v1650000000000!5m2!1sen!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </section>
+
+        <!-- 新設：Q&A -->
+        <section id="qa" class="fade-in-up">
+            <h2 class="section-title">Q&A</h2>
+            <div class="qa-container">
+                <div class="qa-box">
+                    <p class="qa-q">Q. 犬を連れていなくても入店できますか？</p>
+                    <p class="qa-a">A. もちろん大歓迎です！看板犬のコーギーたちと触れ合いながら、のんびりとお食事をお楽しみください。</p>
+                </div>
+                <div class="qa-box">
+                    <p class="qa-q">Q. 大型犬の同伴は可能ですか？</p>
+                    <p class="qa-a">A. はい、可能です。店内には広めのお席をご用意しておりますので、安心してお越しください。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 新設：お問い合わせ -->
+        <section id="contact" class="bg-white fade-in-up">
+            <h2 class="section-title">お問い合わせ</h2>
+            <div class="contact-form">
+                <form action="#" method="post" onsubmit="alert('送信されました！(デモ)'); return false;">
+                    <div class="form-group">
+                        <label for="name">お名前</label>
+                        <input type="text" id="name" required placeholder="あずこ">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">メールアドレス</label>
+                        <input type="email" id="email" required placeholder="example@mail.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">お問い合わせ内容</label>
+                        <textarea id="message" rows="5" required placeholder="ご質問やメッセージをどうぞ！"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">送信する</button>
+                </form>
             </div>
         </section>
     </main>
@@ -364,12 +382,56 @@
         <p>&copy; 2026 Dog Cafe Beach & Corgi. All Rights Reserved.</p>
     </footer>
 
+    <!-- ==========================================================================
+       6. JavaScript（動きのギミック）
+       ========================================================================== -->
     <script>
-        // おまけのJavaScriptギミック：ヘッダーの文字をクリックしたときにアラートでお出迎え
-        const logo = document.querySelector('.logo');
-        logo.addEventListener('click', () => {
-            console.log("カフェへようこそ！ワンワン！🐶");
+        // ① 8秒おきの自動スライドショー
+        const slides = document.querySelectorAll('.slide-img');
+        let currentSlide = 0;
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 8000); // 8000ミリ秒 = 8秒
+
+        // ② ハンバーガーメニューの開閉ギミック
+        const menuBtn = document.getElementById('menuBtn');
+        const sideNav = document.getElementById('sideNav');
+        const menuLinks = document.querySelectorAll('.menu-link');
+
+        // ボタンクリックでメニューを開閉
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('open');
+            sideNav.classList.toggle('active');
         });
+
+        // メニューの中のリンクがクリックされたら、メニューを自動で閉じる
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuBtn.classList.remove('open');
+                sideNav.classList.remove('active');
+            });
+        });
+
+        // ③ スクロールでふわっと浮かび上がるアニメーション（Intersection Observer）
+        const fadeElements = document.querySelectorAll('.fade-in-up');
+        const observerOptions = {
+            root: null,
+            threshold: 0.15, // 要素が15%見えたらトリガー
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // 一度表示されたら監視を終了
+                }
+            });
+        }, observerOptions);
+
+        fadeElements.forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
