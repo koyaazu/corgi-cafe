@@ -183,6 +183,60 @@
             text-align: justify;
         }
 
+        /* ==========================================================================
+           4. ② index.htmlと完全に統一したリッチな黒フッター設定
+           ========================================================================== */
+        footer {
+            background-color: #111111;
+            color: rgba(255, 255, 255, 0.5);
+            padding: 60px 5% 40px 5%;
+            text-align: center;
+        }
+
+        .footer-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 300;
+            letter-spacing: 0.15em;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 30px;
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 30px;
+        }
+
+        /* 子ページフッターのメニューは、トップページの該当箇所に飛べるように「index.html#id」の形に調整 */
+        .footer-nav li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 0.05em;
+            transition: color 0.3s;
+        }
+
+        .footer-nav li a:hover {
+            color: #ffffff;
+        }
+
+        .copyright {
+            font-size: 12px;
+            letter-spacing: 0.05em;
+        }
+
         /* 📱 スマホ用 */
         @media (max-width: 767px) {
             body { padding-top: 70px; }
@@ -190,6 +244,7 @@
             .page-title { font-size: 26px; margin-bottom: 50px; }
             .about-slider-container { height: 300px; }
             .content-section { margin-bottom: 70px; }
+            .footer-nav { gap: 20px 15px; }
         }
     </style>
 </head>
@@ -254,7 +309,18 @@
     </main>
 
     <footer>
-        <p>© 2026 Dog Cafe | With Corgi. All Rights Reserved.</p>
+        <div class="footer-container">
+            <a href="index.html" class="footer-logo">With Corgi</a>
+            <ul class="footer-nav">
+                <li><a href="index.html">TOP</a></li>
+                <li><a href="about.html">お店について</a></li>
+                <li><a href="index.html#dogs">看板犬のご紹介</a></li>
+                <li><a href="index.html#topics">お知らせ</a></li>
+                <li><a href="index.html#access">アクセス</a></li>
+                <li><a href="index.html#contact-hub">お問い合わせ</a></li>
+            </ul>
+            <p class="copyright">© 2026 Dog Cafe | With Corgi. All Rights Reserved.</p>
+        </div>
     </footer>
 
     <script>
