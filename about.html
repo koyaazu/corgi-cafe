@@ -20,7 +20,7 @@
             background-color: #fcfdfd;
             line-height: 1.8;
             overflow-x: hidden;
-            padding-top: 80px; /* シックなヘッダーにコンテンツが被らないための余白 */
+            padding-top: 80px;
         }
 
         html {
@@ -28,19 +28,18 @@
         }
 
         /* ==========================================================================
-           2. ⑤PonteNodo風：シックな黒の半透明ヘッダー & ナビゲーション
+           2. シックな黒の半透明ヘッダー & ナビゲーション
            ========================================================================== */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            /* 黒（rgbaの0,0,0）に透明度0.85を入れ、高級感のあるシックな雰囲気に */
             background-color: rgba(17, 17, 17, 0.85);
-            backdrop-filter: blur(8px); /* トレンドのすりガラスエフェクト */
+            backdrop-filter: blur(8px);
             z-index: 1000;
             display: flex;
-            justify-content: space-between; /* 左にロゴ、右にメニューとボタン */
+            justify-content: space-between;
             align-items: center;
             padding: 20px 5%;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
@@ -54,12 +53,11 @@
             font-weight: 300;
         }
 
-        /* PC用の横並びメニュー一覧 */
         .header-nav-desktop {
             display: flex;
             list-style: none;
             gap: 25px;
-            margin-right: 50px; /* 右端の三の字アイコンと被らないための余白 */
+            margin-right: 50px;
         }
 
         .header-nav-desktop li a {
@@ -74,7 +72,7 @@
             color: #ffffff;
         }
 
-        /* ① 右上部分に表記する「三」ハンバーガーボタン */
+        /* 右上部分に表記する「三」ハンバーガーボタン */
         .menu-btn {
             position: absolute;
             right: 5%;
@@ -94,12 +92,11 @@
         .menu-btn span {
             width: 100%;
             height: 2px;
-            background-color: #ffffff; /* シックな黒背景に映える白の線 */
+            background-color: #ffffff;
             transition: all 0.3s ease-in-out;
             display: block;
         }
 
-        /* 「×」アイコンへ滑らかに変更 */
         .menu-btn.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
         .menu-btn.open span:nth-child(2) { opacity: 0; width: 0; }
         .menu-btn.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
@@ -111,7 +108,7 @@
             right: -320px;
             width: 320px;
             height: 100vh;
-            background-color: rgba(17, 17, 17, 0.95); /* 子ページに合わせてドロワーもシックな黒に */
+            background-color: rgba(17, 17, 17, 0.95);
             padding: 120px 50px;
             box-shadow: -5px 0 15px rgba(0,0,0,0.2);
             z-index: 1500;
@@ -124,7 +121,7 @@
         .side-nav ul li a:hover { color: rgba(255, 255, 255, 0.6); }
 
         /* ==========================================================================
-           3. メインコンテンツ（PonteNodo風レイアウト ＆ 3秒おきスライドショー）
+           3. メインコンテンツ
            ========================================================================== */
         .about-wrapper {
             max-width: 1000px;
@@ -155,7 +152,6 @@
             padding-left: 15px;
         }
 
-        /* ③ 3秒おきのスライドショーを入れる正方形〜長方形の画像コンテナ */
         .about-slider-container {
             position: relative;
             width: 100%;
@@ -173,7 +169,7 @@
             background-size: cover;
             background-position: center;
             opacity: 0;
-            transition: opacity 1.0s ease-in-out; /* 3秒おきなのでフェードは1秒で滑らかに */
+            transition: opacity 1.0s ease-in-out;
         }
 
         .about-slide.active {
@@ -187,23 +183,21 @@
             text-align: justify;
         }
 
-        /* 📱 スマホ用（768px未満）のレスポンシブ微調整コメント */
+        /* 📱 スマホ用 */
         @media (max-width: 767px) {
             body { padding-top: 70px; }
-            .header-nav-desktop { display: none; } /* スマホではヘッダー内の横並びメニューを非表示に */
+            .header-nav-desktop { display: none; }
             .page-title { font-size: 26px; margin-bottom: 50px; }
-            .about-slider-container { height: 300px; } /* スマホに合わせてスライドの高さをコンパクトに */
+            .about-slider-container { height: 300px; }
             .content-section { margin-bottom: 70px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ②⑤ シックな黒の半透明ヘッダー ＆ 「三」アイコン -->
     <header>
         <a href="index.html" class="header-logo">Dog Cafe | With Corgi</a>
         
-        <!-- PonteNodo風：ヘッダー内にもメニューを表記（リンクで飛べる設定） -->
         <ul class="header-nav-desktop">
             <li><a href="index.html">TOP</a></li>
             <li><a href="about.html">お店について</a></li>
@@ -213,7 +207,6 @@
             <li><a href="index.html#contact-hub">お問い合わせ</a></li>
         </ul>
 
-        <!-- ① 右上に配置されたハンバーガーボタン -->
         <button class="menu-btn" id="menuBtn">
             <span></span>
             <span></span>
@@ -221,7 +214,6 @@
         </button>
     </header>
 
-    <!-- 右サイドドロワーメニュー（黒ベース仕様） -->
     <nav class="side-nav" id="sideNav">
         <ul>
             <li><a href="index.html" class="menu-link">TOP</a></li>
@@ -233,76 +225,52 @@
         </ul>
     </nav>
 
-    <!-- メインコンテンツ -->
     <main class="about-wrapper">
         <h1 class="page-title">ABOUT US</h1>
 
-        <!-- セクション1：海辺の近くでゆったりできる空間 -->
         <div class="content-section">
             <h2 class="section-heading">海辺の近くでゆったりできる空間</h2>
-            
-            <!-- ③ 3秒おきの自動スライドショー（海辺×コーギーの写真3枚） -->
             <div class="about-slider-container" id="slider1">
-                <!-- コーギー1：砂浜を走る -->
                 <div class="about-slide active" style="background-image: url('https://images.unsplash.com/photo-1612536057832-2ff7eed5f37e?auto=format&fit=crop&w=1000&q=80');"></div>
-                <!-- コーギー2：海を見つめる -->
-                <div class="slide-img about-slide" style="background-image: url('https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=1000&q=80');"></div>
-                <!-- コーギー3：波打ち際 -->
+                <div class="about-slide" style="background-image: url('https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=1000&q=80');"></div>
                 <div class="about-slide" style="background-image: url('https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=1000&q=80');"></div>
             </div>
-
             <p class="section-text">
                 扉を開けると、そこには遮るもののない青い海と心地よい波の音が広がっています。当カフェは、愛犬と一緒にどこまでもリラックスしていただけるよう、席の間隔を広く取り、砂浜へとそのまま出られる開放的なテラス席をご用意いたしました。波の満ち引きを眺めながら、日常の喧騒を忘れ、特別な1杯とともに穏やかなひとときをお過ごしください。
             </p>
         </div>
 
-        <!-- セクション2：4匹のコーギーたちと自由に触れ合い -->
         <div class="content-section">
             <h2 class="section-heading">4匹のコーギーたちと自由に触れ合い</h2>
-            
-            <!-- ③ 3秒おきの自動スライドショー（ドッグラン・お休み中のコーギーの写真3枚） -->
             <div class="about-slider-container" id="slider2">
-                <!-- コーギー4：元気にダッシュ -->
                 <div class="about-slide active" style="background-image: url('https://images.unsplash.com/photo-1629740067905-bd3f515aa739?auto=format&fit=crop&w=1000&q=80');"></div>
-                <!-- コーギー5：芝生の上でおやすみ -->
                 <div class="about-slide" style="background-image: url('https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=1000&q=80');"></div>
-                <!-- コーギー6：おすわりスマイル -->
                 <div class="about-slide" style="background-image: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1000&q=80');"></div>
             </div>
-
             <p class="section-text">
                 店内には、ドッグランを元気に駆け回る個性豊かな4匹の看板犬コーギーたちが、皆さまを大歓迎でお迎えします。ワンちゃんを連れていないお客様でも、いつでも自由にもふもふの体を撫でたり、おもちゃで一緒に遊んだりして触れ合っていただけます。食いしん坊なエース「すずひこ」をはじめ、愛嬌たっぷりのコーギーたちが、あなたの心を優しく癒やします。
             </p>
         </div>
     </main>
 
-    <!-- フッター -->
-    <footer style="background-color: #111; color: rgba(255,255,255,0.6); text-align: center; padding: 30px; font-size: 13px;">
+    <footer>
         <p>© 2026 Dog Cafe | With Corgi. All Rights Reserved.</p>
     </footer>
 
-    <!-- ==========================================================================
-           4. JavaScript（3秒スライド ＆ ドロワー開閉完全制御）
-           ========================================================================== -->
     <script>
-        // ③ 2つのスライドショーをそれぞれ独立して「3秒（3000ms）おき」に動かす処理
         function startSlider(containerId) {
             const container = document.getElementById(containerId);
             const slides = container.querySelectorAll('.about-slide');
             let current = 0;
-
             setInterval(() => {
                 slides[current].classList.remove('active');
                 current = (current + 1) % slides.length;
                 slides[current].classList.add('active');
-            }, 3000); // 3秒
+            }, 3000);
         }
-
-        // スライドショーの開始
         startSlider('slider1');
         startSlider('slider2');
 
-        // ハンバーガーメニューの開閉 ＆ 三 ⇄ × アニメーション
         const menuBtn = document.getElementById('menuBtn');
         const sideNav = document.getElementById('sideNav');
         const menuLinks = document.querySelectorAll('.menu-link');
