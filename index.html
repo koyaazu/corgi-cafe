@@ -27,7 +27,7 @@
         }
 
         /* ==========================================================================
-           2. 三の字・×ボタンの配置設定（ヘッダー帯は削除）
+           2. 三の字・×ボタンの配置設定
            ========================================================================== */
         .menu-btn {
             position: fixed;
@@ -165,7 +165,7 @@
         }
 
         /* ==========================================================================
-           5. 各セクション共通（ふわっとアニメーション ＆ PC用2分割）
+           5. 各セクション共通設定
            ========================================================================== */
         section {
             padding: 100px 0;
@@ -323,8 +323,60 @@
         .contact-box-title { font-size: 18px; font-weight: bold; color: #0066cc; margin-bottom: 12px; }
         .contact-box-desc { font-size: 13px; color: #666; line-height: 1.6; }
 
-        /* ③ フッターの色を高級感のある黒に指定 */
-        footer { background-color: #111; color: rgba(255,255,255,0.6); text-align: center; padding: 30px; font-size: 13px; }
+        /* ==========================================================================
+           6. ①② PonteNodo風：リッチな黒のナビゲーション付きフッター
+           ========================================================================== */
+        footer {
+            background-color: #111111;
+            color: rgba(255, 255, 255, 0.5);
+            padding: 60px 5% 40px 5%;
+            text-align: center;
+        }
+
+        .footer-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* フッター内のロゴ */
+        .footer-logo {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 300;
+            letter-spacing: 0.15em;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 30px;
+        }
+
+        /* フッター内メニューリンク一覧 */
+        .footer-nav {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 30px;
+        }
+
+        .footer-nav li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 0.05em;
+            transition: color 0.3s;
+        }
+
+        .footer-nav li a:hover {
+            color: #ffffff;
+        }
+
+        .copyright {
+            font-size: 12px;
+            letter-spacing: 0.05em;
+        }
 
         /* 📱 メディアクエリ（スマホ用） */
         @media (max-width: 767px) {
@@ -343,6 +395,7 @@
             .access-overlay-board { margin-left: 0; padding: 30px 25px; }
             .contact-trigger-container { flex-direction: column; align-items: center; gap: 20px; }
             .contact-box-link { width: 100%; max-width: 360px; padding: 35px 20px; }
+            .footer-nav { gap: 20px 15px; } /* スマホ用に間隔を少し狭める */
         }
     </style>
 </head>
@@ -428,7 +481,7 @@
 
         <section id="access" class="bg-white fade-in-up">
             <div class="map-fullscreen">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3281.0423026771124!2d135.1925!3d34.685!2m3!1f0!2f0!3f0!3m2!1i1024!2i1024!4f13.1!3m3!1m2!1s0x60008eed30b42c4b%3A0x633513a96871a255!2sKobe!5e0!3m2!1sen!2sjp!4v1650000000000!5m2!1sen!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3280.941914175317!2d135.19253437637845!3d34.68142478426038!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x355a20ee428453ab%3A0x67dbbe8269e8b9a!2z44CSNjUwLTAwMjQgb615bqc55yMb615oi45biCb615bSu5Yy6b615bK4b616YCab6177yR5LiBb617yR7yR7yR!5e0!3m2!1sja!2sjp!4v1710000000000!5m2!1sja!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
             <div class="access-overlay-board">
                 <h3>ACCESS INFO</h3>
@@ -469,7 +522,18 @@
     </main>
 
     <footer>
-        <p>© 2026 Dog Cafe | With Corgi. All Rights Reserved.</p>
+        <div class="footer-container">
+            <a href="#top-slider" class="footer-logo">With Corgi</a>
+            <ul class="footer-nav">
+                <li><a href="#top-slider">TOP</a></li>
+                <li><a href="about.html">お店について</a></li>
+                <li><a href="#dogs">看板犬のご紹介</a></li>
+                <li><a href="#topics">お知らせ</a></li>
+                <li><a href="#access">アクセス</a></li>
+                <li><a href="#contact-hub">お問い合わせ</a></li>
+            </ul>
+            <p class="copyright">© 2026 Dog Cafe | With Corgi. All Rights Reserved.</p>
+        </div>
     </footer>
 
     <script>
