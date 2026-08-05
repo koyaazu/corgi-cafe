@@ -1,580 +1,235 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dog Cafe | With Corgi</title>
-    <style>
-        /* ==========================================================================
-           1. 全体の共通設定とリセット
-           ========================================================================== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KOBE CORGI CAFE | 愛犬と過ごす神戸の港町カフェ</title>
+  <style>
+    /* ==========================================
+       1. サイト全体の背景（ゆらゆら動くマーブル波模様）
+    ========================================== */
+    body {
+      margin: 0;
+      padding: 0;
+      /* 神戸の海と波打ち際をイメージしたグラデーション */
+      background: linear-gradient(-45deg, #e0f2fe, #bae6fd, #f0f9ff, #ffffff);
+      background-size: 400% 400%;
+      /* 15秒かけて背景がマーブル状となめらかに動く */
+      animation: waveGradient 15s ease infinite;
+      font-family: "Helvetica Neue", Arial, "ヒラギノ角ゴ Pro W3", sans-serif;
+      color: #333333;
+    }
 
-        body {
-            color: #333;
-            background-color: #fcfdfd;
-            line-height: 1.8;
-            overflow-x: hidden;
-        }
+    @keyframes waveGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-        html {
-            scroll-behavior: smooth;
-        }
+    /* ==========================================
+       2. ナビゲーションヘッダー
+    ========================================== */
+    header {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 102, 204, 0.05);
+    }
 
-        /* ==========================================================================
-           2. 三の字・×ボタンの配置設定
-           ========================================================================== */
-        .menu-btn {
-            position: fixed;
-            top: 25px;
-            right: 5%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 30px;
-            height: 20px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            z-index: 2000;
-            padding: 0;
-        }
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+    }
 
-        .menu-btn span {
-            width: 100%;
-            height: 2px;
-            background-color: #ffffff; 
-            transition: all 0.3s ease-in-out;
-            filter: drop-shadow(0px 1px 3px rgba(0,0,0,0.4));
-            display: block;
-        }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #1e3a8a;
+      text-decoration: none;
+    }
 
-        .menu-btn.open span:nth-child(1) {
-            transform: translateY(9px) rotate(45deg);
-            background-color: #ffffff;
-        }
-        .menu-btn.open span:nth-child(2) {
-            opacity: 0;
-            width: 0;
-        }
-        .menu-btn.open span:nth-child(3) {
-            transform: translateY(-9px) rotate(-45deg);
-            background-color: #ffffff;
-        }
+    .global-nav ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 20px;
+    }
 
-        /* 右サイドドロワーメニューバー */
-        .side-nav {
-            position: fixed;
-            top: 0;
-            right: -320px;
-            width: 320px;
-            height: 100vh;
-            background-color: rgba(0, 102, 204, 0.96);
-            padding: 120px 50px;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-            z-index: 1500;
-            transition: right 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
+    .global-nav a {
+      text-decoration: none;
+      color: #1e3a8a;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
 
-        .side-nav.active {
-            right: 0;
-        }
+    .global-nav a:hover {
+      color: #0284c7;
+    }
 
-        .side-nav ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
+    /* ==========================================
+       3. メインビジュアル（シャッターフラッシュ演出）
+    ========================================== */
+    .hero-container {
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
 
-        .side-nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            display: block;
-            transition: color 0.3s;
-        }
+    .top-hero-photo {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 102, 204, 0.15);
+      aspect-ratio: 16 / 9;
+      max-height: 450px;
+      background-color: #cbd5e1; /* 画像読み込み前のアタリ */
+    }
 
-        .side-nav ul li a:hover {
-            color: rgba(255, 255, 255, 0.6);
-        }
+    .top-hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
 
-        /* ==========================================================================
-           3. TOPメインビジュアル（写真スライドショー）
-           ========================================================================== */
-        #top-slider {
-            position: relative;
-            height: 100vh;
-            width: 100%;
-            overflow: hidden;
-            background-color: #111;
-        }
+    /* ホバー時に写真が少し浮かび上がる */
+    .top-hero-photo:hover img {
+      transform: scale(1.02);
+    }
 
-        .slide-wrap {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
+    /* フラッシュ（光）のエフェクト */
+    .top-hero-photo::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 50%; height: 100%;
+      background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+      transform: skewX(-25deg);
+      pointer-events: none;
+    }
 
-        .slide-img {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-        }
+    .top-hero-photo:hover::after {
+      animation: shutterFlash 0.75s ease-out;
+    }
 
-        .slide-img.active {
-            opacity: 1;
-        }
+    @keyframes shutterFlash {
+      100% { left: 200%; }
+    }
 
-        /* ==========================================================================
-           4. タイトルセクション
-           ========================================================================== */
-        #main-title-area {
-            padding: 120px 5% 80px 5%;
-            text-align: center;
-            background-color: #ffffff;
-        }
+    .hero-title-overlay {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      color: #ffffff;
+      text-shadow: 1px 1px 8px rgba(0,0,0,0.6);
+    }
 
-        .brand-title {
-            font-size: 36px;
-            font-weight: 300;
-            letter-spacing: 0.15em;
-            color: #0066cc;
-            margin-bottom: 25px;
-        }
+    .hero-title-overlay h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
 
-        .brand-subtitle {
-            font-size: 15px;
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 2;
-        }
+    /* ==========================================
+       4. 白い薄型レイヤー（グラスモーフィズムカード）
+    ========================================== */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      padding: 30px;
+      margin: 30px auto;
+      max-width: 900px;
+      box-shadow: 0 8px 32px rgba(0, 102, 204, 0.08);
+    }
 
-        /* ==========================================================================
-           5. 各セクション共通設定
-           ========================================================================== */
-        section {
-            padding: 100px 0;
-        }
+    /* ==========================================
+       5. タイトルの「黒肉球の足跡」演出
+    ========================================== */
+    .paw-title {
+      position: relative;
+      display: inline-block;
+      padding-left: 45px;
+      font-size: 1.6rem;
+      color: #1e3a8a;
+      margin-top: 0;
+    }
 
-        .fade-in-up {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 1.2s ease, transform 1.2s ease;
-        }
+    .paw-title::before {
+      content: '🐾';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%) rotate(-15deg);
+      font-size: 1.4rem;
+      opacity: 0.85;
+      animation: pawStep 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
 
-        .fade-in-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    @keyframes pawStep {
+      0% { transform: translateY(-50%) scale(0) rotate(-45deg); opacity: 0; }
+      100% { transform: translateY(-50%) scale(1) rotate(-15deg); opacity: 0.85; }
+    }
 
-        .split-container {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 5%;
-            gap: 8%;
-        }
-
-        .split-container.reverse {
-            flex-direction: row-reverse;
-        }
-
-        .split-block {
-            width: 50%;
-        }
-
-        .split-img {
-            width: 100%;
-            height: 480px;
-            background-size: cover;
-            background-position: center;
-            border-radius: 4px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
-        }
-
-        .split-text-box {
-            padding: 20px 0;
-            text-align: left;
-        }
-
-        .split-label {
-            font-size: 13px;
-            color: #0066cc;
-            letter-spacing: 0.2em;
-            font-weight: bold;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .split-heading {
-            font-size: 26px;
-            font-weight: 400;
-            margin-bottom: 25px;
-            color: #111;
-            letter-spacing: 0.05em;
-        }
-
-        .split-desc {
-            color: #555;
-            font-size: 15px;
-            line-height: 2.2;
-        }
-
-        .normal-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 5%;
-            text-align: center;
-        }
-
-        .center-title {
-            font-size: 26px;
-            color: #0066cc;
-            font-weight: 400;
-            margin-bottom: 50px;
-            letter-spacing: 0.1em;
-        }
-
-        .bg-white { background-color: #ffffff; }
-
-        /* お知らせ一覧 */
-        .topics-list { text-align: left; margin: 0 auto; max-width: 750px; }
-        .topics-item { display: flex; padding: 22px 10px; border-bottom: 1px solid #edf2f7; font-size: 15px; }
-        .topics-date { width: 130px; color: #0066cc; font-weight: bold; }
-        .topics-text { flex: 1; color: #444; }
-
-        /* アクセス */
-        #access {
-            position: relative;
-            padding: 0;
-            width: 100%;
-            height: 550px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-        }
-
-        .map-fullscreen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-        .access-overlay-board {
-            position: relative;
-            z-index: 10;
-            background-color: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(6px);
-            padding: 45px 40px;
-            width: 90%;
-            max-width: 430px;
-            margin-left: 8%;
-            border-radius: 6px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-        }
-        .access-overlay-board h3 { color: #0066cc; font-size: 20px; margin-bottom: 20px; font-weight: 500; }
-        .access-table { width: 100%; border-collapse: collapse; text-align: left; }
-        .access-table th { padding: 10px 0; color: #0066cc; width: 25%; font-size: 14px; vertical-align: top; }
-        .access-table td { padding: 10px 0; font-size: 14px; color: #444; }
-
-        /* お問い合わせ */
-        .contact-trigger-container {
-            display: flex;
-            justify-content: space-between;
-            gap: 25px;
-            width: 100%;
-            max-width: 1000px;
-            margin: 20px auto 0 auto;
-        }
-
-        .contact-box-link {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            padding: 45px 25px;
-            flex: 1;
-            min-width: 250px;
-            text-align: center;
-            text-decoration: none;
-            color: #333;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.01);
-            transition: all 0.3s ease;
-        }
-
-        .contact-box-link:hover {
-            transform: translateY(-5px);
-            border-color: #0066cc;
-            box-shadow: 0 12px 25px rgba(0,102,204,0.08);
-        }
-
-        .contact-icon-text { font-size: 32px; margin-bottom: 15px; display: block; }
-        .contact-box-title { font-size: 18px; font-weight: bold; color: #0066cc; margin-bottom: 12px; }
-        .contact-box-desc { font-size: 13px; color: #666; line-height: 1.6; }
-
-        /* ==========================================================================
-           6. ①② PonteNodo風：リッチな黒のナビゲーション付きフッター
-           ========================================================================== */
-        footer {
-            background-color: #111111;
-            color: rgba(255, 255, 255, 0.5);
-            padding: 60px 5% 40px 5%;
-            text-align: center;
-        }
-
-        .footer-container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        /* フッター内のロゴ */
-        .footer-logo {
-            color: #ffffff;
-            font-size: 20px;
-            font-weight: 300;
-            letter-spacing: 0.15em;
-            text-decoration: none;
-            display: inline-block;
-            margin-bottom: 30px;
-        }
-
-        /* フッター内メニューリンク一覧 */
-        .footer-nav {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin-bottom: 40px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 30px;
-        }
-
-        .footer-nav li a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-size: 14px;
-            letter-spacing: 0.05em;
-            transition: color 0.3s;
-        }
-
-        .footer-nav li a:hover {
-            color: #ffffff;
-        }
-
-        .copyright {
-            font-size: 12px;
-            letter-spacing: 0.05em;
-        }
-
-        /* 📱 メディアクエリ（スマホ用） */
-        @media (max-width: 767px) {
-            #top-slider { height: 50vh; }
-            .menu-btn { top: 20px; right: 6%; }
-            .menu-btn span { background-color: #0066cc; }
-            .menu-btn.open span { background-color: #ffffff; }
-            #main-title-area { padding: 60px 5% 40px 5%; }
-            .brand-title { font-size: 28px; }
-            .split-container, .split-container.reverse { flex-direction: column; gap: 20px; padding: 0 6%; }
-            .split-block { width: 100%; }
-            .split-img { height: 300px; }
-            .split-text-box { padding: 10px 0 40px 0; text-align: center; }
-            section { padding: 60px 0; }
-            #access { justify-content: center; height: 500px; }
-            .access-overlay-board { margin-left: 0; padding: 30px 25px; }
-            .contact-trigger-container { flex-direction: column; align-items: center; gap: 20px; }
-            .contact-box-link { width: 100%; max-width: 360px; padding: 35px 20px; }
-            .footer-nav { gap: 20px 15px; } /* スマホ用に間隔を少し狭める */
-        }
-    </style>
+    /* レスポンシブ調整（スマホ対応） */
+    @media screen and (max-width: 768px) {
+      .nav-container { flex-direction: column; gap: 10px; }
+      .hero-title-overlay h1 { font-size: 1.4rem; }
+      .paw-title { font-size: 1.3rem; }
+      .glass-card { margin: 15px; padding: 20px; }
+    }
+  </style>
 </head>
 <body>
 
-    <button class="menu-btn" id="menuBtn">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-
-    <nav class="side-nav" id="sideNav">
+  <!-- ナビゲーション（TOPと子ページを繋ぐリンク） -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">KOBE CORGI CAFE</a>
+      <nav class="global-nav">
         <ul>
-            <li><a href="#top-slider" class="menu-link">TOP</a></li>
-            <li><a href="about.html" class="menu-link">お店について</a></li>
-            <li><a href="#dogs" class="menu-link">看板犬のご紹介</a></li>
-            <li><a href="#topics" class="menu-link">お知らせ</a></li>
-            <li><a href="#access" class="menu-link">アクセス</a></li>
-            <li><a href="#contact-hub" class="menu-link">お問い合わせ</a></li>
+          <li><a href="index.html">ホーム</a></li>
+          <li><a href="dogs.html">看板犬について</a></li>
+          <li><a href="news.html">お知らせ</a></li>
+          <li><a href="access.html">アクセス</a></li>
+          <li><a href="contact.html">お問い合わせ</a></li>
         </ul>
-    </nav>
+      </nav>
+    </div>
+  </header>
 
-    <main>
-        <div id="top-slider">
-            <div class="slide-wrap">
-                <div class="slide-img active" style="background-image: url('https://images.unsplash.com/photo-1612536057832-2ff7eed5f37e?auto=format&fit=crop&w=1920&q=80');"></div>
-                <div class="slide-img" style="background-image: url('https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=1920&q=80');"></div>
-                <div class="slide-img" style="background-image: url('https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=1920&q=80');"></div>
-            </div>
-        </div>
+  <!-- TOP メインビジュアル（シャッター演出画像） -->
+  <div class="hero-container">
+    <div class="top-hero-photo">
+      <!-- ★ご自身の画像のファイル名・パスに打ち替えてください -->
+      <img src="images/top-hero.jpg" alt="神戸の海と愛犬">
+      <div class="hero-title-overlay">
+        <h1>波打ち際で、愛犬と特別なひとときを。</h1>
+      </div>
+    </div>
+  </div>
 
-        <div id="main-title-area">
-            <h1 class="brand-title">Dog Cafe ｜With Corgi</h1>
-            <p class="brand-subtitle">穏やかな波の音を聴きながら、大切な愛犬と一緒に過ごす極上のひととき。美しい海岸線に佇む、コーギーたちが主役ののんびり心地よいドッグカフェです。</p>
-        </div>
+  <!-- メインコンテンツ（すりガラス風カード） -->
+  <main>
+    <section class="glass-card">
+      <h2 class="paw-title">Concept</h2>
+      <p>潮風が心地よい港町・神戸に広がる、コーギーと愛犬家のための小さな隠れ家カフェ。</p>
+      <p>寿々彦とナナと一緒に、波音を聞きながら思い出の一ページを残しませんか？</p>
+    </section>
 
-        <section id="about-summary" class="fade-in-up">
-            <div class="split-container">
-                <div class="split-block">
-                    <div class="split-img" style="background-image: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=800&q=80');"></div>
-                </div>
-                <div class="split-block split-text-box">
-                    <span class="split-label">ABOUT US</span>
-                    <h2 class="split-heading">海風を感じる開放的な空間</h2>
-                    <p class="split-desc">
-                        こだわりの自家焙煎コーヒーや、ワンちゃんも安心してお召し上がりいただける無添加のスペシャルメニューをご用意しております。全面ガラス張りのテラス席からは、時間ごとに表情を変える美しい海が一望できます。
-                    </p>
-                    <a href="about.html" style="display:inline-block; margin-top:20px; color:#0066cc; text-decoration:none; font-weight:bold; border-bottom:1px solid #0066cc; padding-bottom:3px;">詳しく見る →</a>
-                </div>
-            </div>
-        </section>
+    <section class="glass-card">
+      <h2 class="paw-title">News & Topics</h2>
+      <p>【お知らせ】看板犬・寿々彦の出勤スケジュールを更新しました！</p>
+    </section>
+  </main>
 
-        <section id="dogs" class="bg-white fade-in-up">
-            <div class="split-container reverse">
-                <div class="split-block">
-                    <div class="split-img" style="background-image: url('https://images.unsplash.com/photo-1629740067905-bd3f515aa739?auto=format&fit=crop&w=800&q=80');"></div>
-                </div>
-                <div class="split-block split-text-box">
-                    <span class="split-label">OUR DOGS</span>
-                    <h2 class="split-heading">エース看板犬「すずひこ」</h2>
-                    <p class="split-desc">
-                        食いしん坊でとっても甘えん坊なコーギーの男の子。お気に入りのおもちゃを見つけると、あっという間にブンブン振り回して遊ぶ元気いっぱいな一面も。お店のオープンからラストまで、いつも皆さまをモフモフの笑顔とお尻でお迎えする、当店の頼れる癒やし隊長です。
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section id="topics" class="fade-in-up">
-            <div class="normal-container">
-                <h2 class="center-title">お知らせ</h2>
-                <div class="topics-list">
-                    <div class="topics-item">
-                        <span class="topics-date">2026.06.19</span>
-                        <span class="topics-text">本日限定！特別なアニバーサリーおやつセットを数量限定でプレゼント中です 🌸</span>
-                    </div>
-                    <div class="topics-item">
-                        <span class="topics-date">2026.06.01</span>
-                        <span class="topics-text">夏に向けた、愛犬と一緒に楽しむ冷製フルーツドリンクメニューがスタートしました。</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="access" class="bg-white fade-in-up">
-            <div class="map-fullscreen">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3280.941914175317!2d135.19253437637845!3d34.68142478426038!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x355a20ee428453ab%3A0x67dbbe8269e8b9a!2z44CSNjUwLTAwMjQgb615bqc55yMb615oi45biCb615bSu5Yy6b615bK4b616YCab6177yR5LiBb617yR7yR7yR!5e0!3m2!1sja!2sjp!4v1710000000000!5m2!1sja!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-            </div>
-            <div class="access-overlay-board">
-                <h3>ACCESS INFO</h3>
-                <table class="access-table">
-                    <tr><th>住所</th><td>兵庫県神戸市中央区 海岸通 1-1-1<br><span style="font-size:12px; color:#888;">(海岸口より徒歩3分)</span></td></tr>
-                    <tr><th>営業時間</th><td>10:00 〜 18:00</td></tr>
-                    <tr><th>定休日</th><td>毎週木曜日</td></tr>
-                </table>
-            </div>
-        </section>
-
-        <section id="contact-hub" class="fade-in-up">
-            <div class="normal-container">
-                <h2 class="center-title">お問い合わせ</h2>
-                <p style="color: #666; font-size: 14px; margin-bottom: 50px;">ご質問や日々のコーギーたちの様子は、以下の各窓口からお気軽にご連絡ください。</p>
-                
-                <div class="contact-trigger-container">
-                    <a href="https://instagram.com" target="_blank" class="contact-box-link">
-                        <span class="contact-icon-text">📸</span>
-                        <p class="contact-box-title">Instagram</p>
-                        <p class="contact-box-desc">日々の可愛いすずひこの日常写真や、お店のリアルタイムな空席情報を発信しています。</p>
-                    </a>
-
-                    <a href="javascript:void(0);" onclick="alert('メールフォーム画面へ遷移します（デモ動作です）')" class="contact-box-link">
-                        <span class="contact-icon-text">✉️</span>
-                        <p class="contact-box-title">メールフォーム</p>
-                        <p class="contact-box-desc">ご予約のご相談や、イベント・貸切等に関するご連絡はこちらの専用フォームから。</p>
-                    </a>
-
-                    <a href="javascript:void(0);" onclick="alert('よくある質問（Q&A）の専用ページへ遷移します（デモ動作です）')" class="contact-box-link">
-                        <span class="contact-icon-text">❓</span>
-                        <p class="contact-box-title">Q&A</p>
-                        <p class="contact-box-desc">皆さまからよくいただくご質問（ワンちゃん同伴のルール、駐車場、お誕生日特典など）を掲載しています。</p>
-                    </a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="footer-container">
-            <a href="#top-slider" class="footer-logo">With Corgi</a>
-            <ul class="footer-nav">
-                <li><a href="#top-slider">TOP</a></li>
-                <li><a href="about.html">お店について</a></li>
-                <li><a href="#dogs">看板犬のご紹介</a></li>
-                <li><a href="#topics">お知らせ</a></li>
-                <li><a href="#access">アクセス</a></li>
-                <li><a href="#contact-hub">お問い合わせ</a></li>
-            </ul>
-            <p class="copyright">© 2026 Dog Cafe | With Corgi. All Rights Reserved.</p>
-        </div>
-    </footer>
-
-    <script>
-        // スライドショー
-        const slides = document.querySelectorAll('.slide-img');
-        let currentSlide = 0;
-        setInterval(() => {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }, 5000);
-
-        // ドロワーメニュー制御
-        const menuBtn = document.getElementById('menuBtn');
-        const sideNav = document.getElementById('sideNav');
-        const menuLinks = document.querySelectorAll('.menu-link');
-
-        menuBtn.addEventListener('click', () => {
-            menuBtn.classList.toggle('open');
-            sideNav.classList.toggle('active');
-        });
-
-        menuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                menuBtn.classList.remove('open');
-                sideNav.classList.remove('active');
-            });
-        });
-
-        // ふわっと表示
-        const fadeElements = document.querySelectorAll('.fade-in-up');
-        const observerOptions = { root: null, threshold: 0.1, rootMargin: "0px 0px -40px 0px" };
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-        fadeElements.forEach(el => observer.observe(el));
-    </script>
 </body>
 </html>
