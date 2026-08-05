@@ -108,7 +108,6 @@
       display: block;
     }
 
-    /* キャプションの位置指定 */
     .caption-left-bottom {
       position: absolute;
       left: 30px;
@@ -143,11 +142,11 @@
       margin: 30px auto;
       max-width: 900px;
       box-shadow: 0 8px 32px rgba(0, 102, 204, 0.08);
-      text-align: center; /* 中央配置 */
+      text-align: center;
     }
 
     /* ==========================================
-       5. 肉球足跡演出（1個に変更）
+       5. 肉球足跡演出（1個）
     ========================================== */
     .paw-title {
       position: relative;
@@ -176,48 +175,49 @@
     }
 
     /* ==========================================
-       6. Concept（7:3 レイアウト & ポラロイド風重ね）
+       6. Concept（7:3 レイアウト & 写真拡大・右寄せ調整）
     ========================================== */
     .concept-flex {
       display: flex;
       align-items: center;
       gap: 20px;
-      text-align: left; /* テキスト内部は左揃えで見やすく */
+      text-align: left;
     }
 
     .concept-text {
       flex: 7;
       font-size: 1.05rem;
-      line-height: 1.8;
+      line-height: 1.9;
     }
 
     .concept-photos {
       flex: 3;
       position: relative;
-      height: 180px;
+      height: 210px; /* 写真拡大に伴い少し高さを確保 */
+      margin-left: auto; /* 右にしっかり寄せる */
     }
 
-    /* ポラロイド風写真の重ね表示 */
+    /* ポラロイド風写真（大きめに変更） */
     .polaroid {
       position: absolute;
       background: #ffffff;
-      padding: 6px 6px 18px 6px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      padding: 8px 8px 22px 8px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.18);
       border-radius: 4px;
-      width: 100px;
+      width: 130px; /* サイズアップ */
       transition: transform 0.3s ease;
     }
 
     .polaroid img {
       width: 100%;
-      height: 75px;
+      height: 95px; /* サイズアップ */
       object-fit: cover;
       display: block;
     }
 
-    .polaroid:nth-child(1) { top: 10px; left: 0px; transform: rotate(-10deg); z-index: 1; }
-    .polaroid:nth-child(2) { top: 30px; left: 35px; transform: rotate(5deg); z-index: 2; }
-    .polaroid:nth-child(3) { top: 50px; left: 70px; transform: rotate(-5deg); z-index: 3; }
+    .polaroid:nth-child(1) { top: 0px; right: 80px; transform: rotate(-10deg); z-index: 1; }
+    .polaroid:nth-child(2) { top: 25px; right: 40px; transform: rotate(5deg); z-index: 2; }
+    .polaroid:nth-child(3) { top: 50px; right: 0px; transform: rotate(-5deg); z-index: 3; }
 
     .polaroid:hover {
       transform: scale(1.15) rotate(0deg) !important;
@@ -240,7 +240,7 @@
     }
 
     .news-item:not(:last-child) {
-      border-bottom: 2px dashed #bae6fd; /* ポップな水色の点線 */
+      border-bottom: 2px dashed #bae6fd;
     }
 
     .news-date {
@@ -250,7 +250,7 @@
     }
 
     /* ==========================================
-       8. アクセス & お問い合わせ（ボタンデザイン）
+       8. アクセス & お問い合わせ（ボタン）
     ========================================== */
     .btn-action {
       display: inline-block;
@@ -271,7 +271,7 @@
     }
 
     /* ==========================================
-       9. ふわっと表示（Scroll Fade-in）
+       9. ふわっと表示
     ========================================== */
     .fade-in {
       opacity: 0;
@@ -284,20 +284,20 @@
       transform: translateY(0);
     }
 
-    /* レスポンシブ調整 */
     @media screen and (max-width: 768px) {
       .concept-flex { flex-direction: column; }
-      .concept-photos { height: 150px; width: 100%; }
-      .polaroid:nth-child(1) { left: 15%; }
-      .polaroid:nth-child(2) { left: 38%; }
-      .polaroid:nth-child(3) { left: 60%; }
+      .concept-photos { height: 160px; width: 100%; margin-left: 0; }
+      .polaroid { width: 100px; }
+      .polaroid img { height: 75px; }
+      .polaroid:nth-child(1) { right: 50%; }
+      .polaroid:nth-child(2) { right: 25%; }
+      .polaroid:nth-child(3) { right: 0; }
       .caption-left-bottom, .caption-right-top { font-size: 1rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ナビゲーション -->
   <header>
     <div class="nav-container">
       <a href="index.html" class="logo">DOG CAFE｜with Corgi</a>
@@ -313,15 +313,12 @@
     </div>
   </header>
 
-  <!-- スライドショー -->
   <div class="hero-container fade-in">
     <div class="slideshow-wrapper">
-      <!-- 1枚目：女性とコーギー -->
       <div class="slide-item active">
         <img src="https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=1200&q=80" alt="カフェで過ごす愛犬と女性">
         <p class="caption-left-bottom">波打ち際で、愛犬と特別なひとときを。</p>
       </div>
-      <!-- 2枚目：浜辺を走るコーギー -->
       <div class="slide-item">
         <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80" alt="波打ち際を走るコーギー">
         <p class="caption-right-top">大好きな愛犬と、素敵な時間を。</p>
@@ -330,12 +327,11 @@
   </div>
 
   <main>
-    <!-- Concept -->
     <section class="glass-card fade-in">
       <h2 class="paw-title">Concept</h2>
       <div class="concept-flex">
         <div class="concept-text">
-          <p>潮風が心地よい港町にある、コーギーと愛犬家のための小さな隠れ家カフェ。看板犬コーギーも皆さんのお越しをお待ちしております。</p>
+          <p>潮風が心地よい港町にある、コーギーと愛犬家のための小さな隠れ家カフェ。<br>看板犬コーギーも皆さんのお越しをお待ちしております。</p>
         </div>
         <div class="concept-photos">
           <div class="polaroid"><img src="https://images.unsplash.com/photo-1612536057832-2ff7ead7819c?auto=format&fit=crop&w=300&q=80" alt="コーギー1"></div>
@@ -345,23 +341,15 @@
       </div>
     </section>
 
-    <!-- News & Topics -->
     <section class="glass-card fade-in">
       <h2 class="paw-title">News & Topics</h2>
       <ul class="news-list">
-        <li class="news-item">
-          <span class="news-date">2026.7.28</span>【お知らせ】8月の営業スケジュールを更新しました！
-        </li>
-        <li class="news-item">
-          <span class="news-date">2026.7.12</span>【お知らせ】看板犬コーギー・お誕生日会レポートを更新しました！
-        </li>
-        <li class="news-item">
-          <span class="news-date">2026.6.28</span>【お知らせ】7月の営業スケジュールを更新しました！
-        </li>
+        <li class="news-item"><span class="news-date">2026.7.28</span>【お知らせ】8月の営業スケジュールを更新しました！</li>
+        <li class="news-item"><span class="news-date">2026.7.12</span>【お知らせ】看板犬コーギー・お誕生日会レポートを更新しました！</li>
+        <li class="news-item"><span class="news-date">2026.6.28</span>【お知らせ】7月の営業スケジュールを更新しました！</li>
       </ul>
     </section>
 
-    <!-- Access -->
     <section class="glass-card fade-in">
       <h2 class="paw-title">Access</h2>
       <p>〒650-0000 兵庫県神戸市中央区港町 1-1-1</p>
@@ -369,7 +357,6 @@
       <a href="access.html" class="btn-action">詳しいアクセス・地図を見る</a>
     </section>
 
-    <!-- Contact -->
     <section class="glass-card fade-in">
       <h2 class="paw-title">Contact</h2>
       <p>お席のご予約や、イベント・出張ふれあいサービスのご相談はこちらから承っております。</p>
@@ -377,21 +364,16 @@
     </section>
   </main>
 
-  <!-- JavaScript（3秒スライドショー & ふわっと表示スクロール） -->
   <script>
-    // 1. スライドショー制御（3秒ごと）
     const slides = document.querySelectorAll('.slide-item');
     let currentSlide = 0;
-
     setInterval(() => {
       slides[currentSlide].classList.remove('active');
       currentSlide = (currentSlide + 1) % slides.length;
       slides[currentSlide].classList.add('active');
     }, 3000);
 
-    // 2. ふわっと表示（Scroll Fade-in）
     const fadeElements = document.querySelectorAll('.fade-in');
-
     const handleScroll = () => {
       fadeElements.forEach(el => {
         const rect = el.getBoundingClientRect();
@@ -400,7 +382,6 @@
         }
       });
     };
-
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('load', handleScroll);
   </script>
