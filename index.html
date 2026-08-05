@@ -193,24 +193,23 @@
     .concept-photos {
       flex: 3;
       position: relative;
-      height: 210px; /* 写真拡大に伴い少し高さを確保 */
-      margin-left: auto; /* 右にしっかり寄せる */
+      height: 210px;
+      margin-left: auto;
     }
 
-    /* ポラロイド風写真（大きめに変更） */
     .polaroid {
       position: absolute;
       background: #ffffff;
       padding: 8px 8px 22px 8px;
       box-shadow: 0 6px 14px rgba(0,0,0,0.18);
       border-radius: 4px;
-      width: 130px; /* サイズアップ */
+      width: 130px;
       transition: transform 0.3s ease;
     }
 
     .polaroid img {
       width: 100%;
-      height: 95px; /* サイズアップ */
+      height: 95px;
       object-fit: cover;
       display: block;
     }
@@ -298,19 +297,19 @@
 </head>
 <body>
 
+  <!-- ナビゲーション（about.htmlへのリンクに確実に更新！） -->
   <header>
     <div class="nav-container">
       <a href="index.html" class="logo">DOG CAFE｜with Corgi</a>
-    <!-- index.html のヘッダーナビゲーション部 -->
-    <nav class="global-nav">
-      <ul>
-        <li><a href="index.html">ホーム</a></li>
-        <li><a href="about.html">お店について</a></li> <!-- こちらを更新！ -->
-        <li><a href="news.html">お知らせ</a></li>
-        <li><a href="access.html">アクセス</a></li>
-        <li><a href="contact.html">お問い合わせ</a></li>
-      </ul>
-    </nav>
+      <nav class="global-nav">
+        <ul>
+          <li><a href="index.html">ホーム</a></li>
+          <li><a href="about.html">お店について</a></li> <!-- ★ここをabout.htmlに修正！ -->
+          <li><a href="news.html">お知らせ</a></li>
+          <li><a href="access.html">アクセス</a></li>
+          <li><a href="contact.html">お問い合わせ</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
 
