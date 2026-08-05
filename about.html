@@ -1,357 +1,286 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ABOUT US | Dog Cafe With Corgi</title>
-    <style>
-        /* ==========================================================================
-           1. 全体の共通設定とリセット
-           ========================================================================== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お店について｜DOG CAFE｜with Corgi</title>
+  <style>
+    /* 1. サイト共通背景（ゆらゆら動くマーブル波模様） */
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(-45deg, #e0f2fe, #bae6fd, #f0f9ff, #ffffff);
+      background-size: 400% 400%;
+      animation: waveGradient 15s ease infinite;
+      font-family: "Helvetica Neue", Arial, "ヒラギノ角ゴ Pro W3", sans-serif;
+      color: #333333;
+    }
 
-        body {
-            color: #333;
-            background-color: #fcfdfd;
-            line-height: 1.8;
-            overflow-x: hidden;
-            padding-top: 80px;
-        }
+    @keyframes waveGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-        html {
-            scroll-behavior: smooth;
-        }
+    /* 2. ナビゲーションヘッダー */
+    header {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 102, 204, 0.05);
+    }
 
-        /* ==========================================================================
-           2. シックな黒の半透明ヘッダー & ナビゲーション
-           ========================================================================== */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(17, 17, 17, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+    }
 
-        .header-logo {
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 16px;
-            letter-spacing: 0.1em;
-            font-weight: 300;
-        }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #1e3a8a;
+      text-decoration: none;
+    }
 
-        .header-nav-desktop {
-            display: flex;
-            list-style: none;
-            gap: 25px;
-            margin-right: 50px;
-        }
+    .global-nav ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 20px;
+    }
 
-        .header-nav-desktop li a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            font-size: 14px;
-            letter-spacing: 0.05em;
-            transition: color 0.3s;
-        }
+    .global-nav a {
+      text-decoration: none;
+      color: #1e3a8a;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
 
-        .header-nav-desktop li a:hover {
-            color: #ffffff;
-        }
+    .global-nav a:hover {
+      color: #0284c7;
+    }
 
-        /* 右上部分に表記する「三」ハンバーガーボタン */
-        .menu-btn {
-            position: absolute;
-            right: 5%;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 30px;
-            height: 18px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            z-index: 2000;
-        }
+    /* 3. メインコンテナ */
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
 
-        .menu-btn span {
-            width: 100%;
-            height: 2px;
-            background-color: #ffffff;
-            transition: all 0.3s ease-in-out;
-            display: block;
-        }
+    .page-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
 
-        .menu-btn.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-        .menu-btn.open span:nth-child(2) { opacity: 0; width: 0; }
-        .menu-btn.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+    .paw-title {
+      position: relative;
+      display: inline-block;
+      padding-left: 35px;
+      font-size: 2rem;
+      color: #1e3a8a;
+    }
 
-        /* 右サイドドロワーメニューバー */
-        .side-nav {
-            position: fixed;
-            top: 0;
-            right: -320px;
-            width: 320px;
-            height: 100vh;
-            background-color: rgba(17, 17, 17, 0.95);
-            padding: 120px 50px;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.2);
-            z-index: 1500;
-            transition: right 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
+    .paw-title::before {
+      content: '🐾';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%) rotate(-15deg);
+      font-size: 1.5rem;
+      opacity: 0.85;
+    }
 
-        .side-nav.active { right: 0; }
-        .side-nav ul { list-style: none; display: flex; flex-direction: column; gap: 30px; }
-        .side-nav ul li a { color: white; text-decoration: none; font-size: 17px; letter-spacing: 0.1em; display: block; }
-        .side-nav ul li a:hover { color: rgba(255, 255, 255, 0.6); }
+    /* 4. 1セットのカード（ポラロイド＋手紙風枠） */
+    .about-card-pair {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      margin-bottom: 50px;
+    }
 
-        /* ==========================================================================
-           3. メインコンテンツ
-           ========================================================================== */
-        .about-wrapper {
-            max-width: 1000px;
-            margin: 60px auto 120px auto;
-            padding: 0 5%;
-        }
+    /* 左右交互レイアウト */
+    .about-card-pair:nth-child(even) {
+      flex-direction: row-reverse;
+    }
 
-        .page-title {
-            font-size: 32px;
-            font-weight: 300;
-            letter-spacing: 0.15em;
-            color: #111;
-            text-align: center;
-            margin-bottom: 80px;
-        }
+    /* ポラロイド写真フレーム（ひょっこり飛び出しギミック） */
+    .polaroid-frame {
+      flex: 4;
+      background: #ffffff;
+      padding: 12px 12px 35px 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      border-radius: 6px;
+      position: relative;
+      overflow: visible;
+      text-align: center;
+    }
 
-        .content-section {
-            margin-bottom: 120px;
-        }
+    .polaroid-frame img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
 
-        .section-heading {
-            font-size: 22px;
-            font-weight: 400;
-            color: #0066cc;
-            margin-bottom: 25px;
-            letter-spacing: 0.05em;
-            border-left: 3px solid #0066cc;
-            padding-left: 15px;
-        }
+    .polaroid-frame:hover img {
+      transform: scale(1.1) translateY(-10px);
+    }
 
-        .about-slider-container {
-            position: relative;
-            width: 100%;
-            height: 500px;
-            overflow: hidden;
-            border-radius: 4px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-        }
+    .polaroid-caption {
+      margin-top: 10px;
+      font-family: "Georgia", serif;
+      font-weight: bold;
+      color: #555;
+      font-size: 0.95rem;
+    }
 
-        .about-slide {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 1.0s ease-in-out;
-        }
+    /* 手紙風テキスト枠（ベージュ・手紙質感） */
+    .letter-box {
+      flex: 6;
+      background: #fdfbf7;
+      border: 1px solid #e7e0d3;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.02), 0 5px 15px rgba(0,0,0,0.05);
+      border-radius: 12px;
+      padding: 25px 30px;
+      position: relative;
+    }
 
-        .about-slide.active {
-            opacity: 1;
-        }
+    .letter-box::before {
+      content: '';
+      position: absolute;
+      top: 10px; left: 10px; right: 10px; bottom: 10px;
+      border: 1px dashed #d6cbba;
+      pointer-events: none;
+      border-radius: 8px;
+    }
 
-        .section-text {
-            font-size: 15px;
-            color: #555;
-            line-height: 2.2;
-            text-align: justify;
-        }
+    .section-subtitle {
+      font-size: 1.4rem;
+      color: #1e3a8a;
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
 
-        /* ==========================================================================
-           4. ② index.htmlと完全に統一したリッチな黒フッター設定
-           ========================================================================== */
-        footer {
-            background-color: #111111;
-            color: rgba(255, 255, 255, 0.5);
-            padding: 60px 5% 40px 5%;
-            text-align: center;
-        }
+    .letter-content {
+      line-height: 1.8;
+      font-size: 0.98rem;
+      color: #444;
+    }
 
-        .footer-container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+    /* ふわっと表示 */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
 
-        .footer-logo {
-            color: #ffffff;
-            font-size: 20px;
-            font-weight: 300;
-            letter-spacing: 0.15em;
-            text-decoration: none;
-            display: inline-block;
-            margin-bottom: 30px;
-        }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-        .footer-nav {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin-bottom: 40px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 30px;
-        }
-
-        /* 子ページフッターのメニューは、トップページの該当箇所に飛べるように「index.html#id」の形に調整 */
-        .footer-nav li a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-size: 14px;
-            letter-spacing: 0.05em;
-            transition: color 0.3s;
-        }
-
-        .footer-nav li a:hover {
-            color: #ffffff;
-        }
-
-        .copyright {
-            font-size: 12px;
-            letter-spacing: 0.05em;
-        }
-
-        /* 📱 スマホ用 */
-        @media (max-width: 767px) {
-            body { padding-top: 70px; }
-            .header-nav-desktop { display: none; }
-            .page-title { font-size: 26px; margin-bottom: 50px; }
-            .about-slider-container { height: 300px; }
-            .content-section { margin-bottom: 70px; }
-            .footer-nav { gap: 20px 15px; }
-        }
-    </style>
+    /* レスポンシブ対応 */
+    @media screen and (max-width: 768px) {
+      .about-card-pair, .about-card-pair:nth-child(even) {
+        flex-direction: column;
+      }
+      .polaroid-frame, .letter-box { width: 100%; box-sizing: border-box; }
+    }
+  </style>
 </head>
 <body>
 
-    <header>
-        <a href="index.html" class="header-logo">Dog Cafe | With Corgi</a>
-        
-        <ul class="header-nav-desktop">
-            <li><a href="index.html">TOP</a></li>
-            <li><a href="about.html">お店について</a></li>
-            <li><a href="index.html#dogs">看板犬</a></li>
-            <li><a href="index.html#topics">お知らせ</a></li>
-            <li><a href="index.html#access">アクセス</a></li>
-            <li><a href="index.html#contact-hub">お問い合わせ</a></li>
-        </ul>
-
-        <button class="menu-btn" id="menuBtn">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </header>
-
-    <nav class="side-nav" id="sideNav">
+  <!-- ナビゲーション -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">DOG CAFE｜with Corgi</a>
+      <nav class="global-nav">
         <ul>
-            <li><a href="index.html" class="menu-link">TOP</a></li>
-            <li><a href="about.html" class="menu-link">お店について</a></li>
-            <li><a href="index.html#dogs" class="menu-link">看板犬のご紹介</a></li>
-            <li><a href="index.html#topics" class="menu-link">お知らせ</a></li>
-            <li><a href="index.html#access" class="menu-link">アクセス</a></li>
-            <li><a href="index.html#contact-hub" class="menu-link">お問い合わせ</a></li>
+          <li><a href="index.html">ホーム</a></li>
+          <li><a href="about.html">お店について</a></li>
+          <li><a href="news.html">お知らせ</a></li>
+          <li><a href="access.html">アクセス</a></li>
+          <li><a href="contact.html">お問い合わせ</a></li>
         </ul>
-    </nav>
+      </nav>
+    </div>
+  </header>
 
-    <main class="about-wrapper">
-        <h1 class="page-title">ABOUT US</h1>
+  <div class="container">
+    <div class="page-title fade-in">
+      <h1 class="paw-title">お店について</h1>
+    </div>
 
-        <div class="content-section">
-            <h2 class="section-heading">海辺の近くでゆったりできる空間</h2>
-            <div class="about-slider-container" id="slider1">
-                <div class="about-slide active" style="background-image: url('https://images.unsplash.com/photo-1612536057832-2ff7eed5f37e?auto=format&fit=crop&w=1000&q=80');"></div>
-                <div class="about-slide" style="background-image: url('https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=1000&q=80');"></div>
-                <div class="about-slide" style="background-image: url('https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=1000&q=80');"></div>
-            </div>
-            <p class="section-text">
-                扉を開けると、そこには遮るもののない青い海と心地よい波の音が広がっています。当カフェは、愛犬と一緒にどこまでもリラックスしていただけるよう、席の間隔を広く取り、砂浜へとそのまま出られる開放的なテラス席をご用意いたしました。波の満ち引きを眺めながら、日常の喧騒を忘れ、特別な1杯とともに穏やかなひとときをお過ごしください。
-            </p>
+    <!-- 1ステップ目：海辺のロケーションと空間 -->
+    <div class="about-card-pair fade-in">
+      <div class="polaroid-frame">
+        <img src="https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=600&q=80" alt="海辺の空間">
+        <div class="polaroid-caption">Sea Side Location</div>
+      </div>
+      <div class="letter-box">
+        <h2 class="section-subtitle">海辺の近くで愛犬とくつろげる空間</h2>
+        <div class="letter-content">
+          <p>神戸の心地よい潮風を感じる港町に位置する当カフェは、大切な愛犬と一緒にゆったりとした時間を過ごせるモダンで落ち着いた空間デザインにこだわりました。</p>
+          <p>日常の忙しさを少しだけ忘れて、波音を聴きながら愛犬と笑顔になれる特別なひとときをお届けします。</p>
         </div>
+      </div>
+    </div>
 
-        <div class="content-section">
-            <h2 class="section-heading">4匹のコーギーたちと自由に触れ合い</h2>
-            <div class="about-slider-container" id="slider2">
-                <div class="about-slide active" style="background-image: url('https://images.unsplash.com/photo-1629740067905-bd3f515aa739?auto=format&fit=crop&w=1000&q=80');"></div>
-                <div class="about-slide" style="background-image: url('https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=1000&q=80');"></div>
-                <div class="about-slide" style="background-image: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1000&q=80');"></div>
-            </div>
-            <p class="section-text">
-                店内には、ドッグランを元気に駆け回る個性豊かな4匹の看板犬コーギーたちが、皆さまを大歓迎でお迎えします。ワンちゃんを連れていないお客様でも、いつでも自由にもふもふの体を撫でたり、おもちゃで一緒に遊んだりして触れ合っていただけます。食いしん坊なエース「すずひこ」をはじめ、愛嬌たっぷりのコーギーたちが、あなたの心を優しく癒やします。
-            </p>
+    <!-- 2ステップ目：開放的なテラス席 -->
+    <div class="about-card-pair fade-in">
+      <div class="polaroid-frame">
+        <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=600&q=80" alt="テラス席">
+        <div class="polaroid-caption">Open Terrace</div>
+      </div>
+      <div class="letter-box">
+        <h2 class="section-subtitle">開放的なテラス席で過ごす贅沢な時間</h2>
+        <div class="letter-content">
+          <p>青空と海を一望できる開放的なテラス席は、ワンちゃんとのカフェタイムに一番人気のお席です。</p>
+          <p>お散歩途中の休憩としてはもちろん、絶景ロケーションをバックに大切な愛犬の写真を撮ったり、自家製のドリンクやカフェメニューを楽しみながら、ゆったりとしたカフェ時間をお楽しみいただけます。</p>
         </div>
-    </main>
+      </div>
+    </div>
 
-    <footer>
-        <div class="footer-container">
-            <a href="index.html" class="footer-logo">With Corgi</a>
-            <ul class="footer-nav">
-                <li><a href="index.html">TOP</a></li>
-                <li><a href="about.html">お店について</a></li>
-                <li><a href="index.html#dogs">看板犬のご紹介</a></li>
-                <li><a href="index.html#topics">お知らせ</a></li>
-                <li><a href="index.html#access">アクセス</a></li>
-                <li><a href="index.html#contact-hub">お問い合わせ</a></li>
-            </ul>
-            <p class="copyright">© 2026 Dog Cafe | With Corgi. All Rights Reserved.</p>
+    <!-- 3ステップ目：当店スタッフ犬（寿々彦・ナナ） -->
+    <div class="about-card-pair fade-in">
+      <div class="polaroid-frame">
+        <img src="https://images.unsplash.com/photo-1612536057832-2ff7ead7819c?auto=format&fit=crop&w=600&q=80" alt="スタッフ犬">
+        <div class="polaroid-caption">Corgi Staff</div>
+      </div>
+      <div class="letter-box">
+        <h2 class="section-subtitle">看板スタッフ犬のご紹介</h2>
+        <div class="letter-content">
+          <p>店内では、当店の『おもてなしスタッフ』としてコーギーたちが皆様をお出迎えしております！</p>
+          <p><strong>【寿々彦（すずひこ）】</strong>：おっとりマイペースな現役ホールスタッフ。お客様の足元でやさしくご挨拶します♪<br>
+          <strong>【ナナ】</strong>：カフェの創業を見守ってきた永遠のレディ。天国からお店の平和を見守る名誉店長です。</p>
         </div>
-    </footer>
+      </div>
+    </div>
 
-    <script>
-        function startSlider(containerId) {
-            const container = document.getElementById(containerId);
-            const slides = container.querySelectorAll('.about-slide');
-            let current = 0;
-            setInterval(() => {
-                slides[current].classList.remove('active');
-                current = (current + 1) % slides.length;
-                slides[current].classList.add('active');
-            }, 3000);
+  </div>
+
+  <script>
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const handleScroll = () => {
+      fadeElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.85) {
+          el.classList.add('visible');
         }
-        startSlider('slider1');
-        startSlider('slider2');
+      });
+    };
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('load', handleScroll);
+  </script>
 
-        const menuBtn = document.getElementById('menuBtn');
-        const sideNav = document.getElementById('sideNav');
-        const menuLinks = document.querySelectorAll('.menu-link');
-
-        menuBtn.addEventListener('click', () => {
-            menuBtn.classList.toggle('open');
-            sideNav.classList.toggle('active');
-        });
-
-        menuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                menuBtn.classList.remove('open');
-                sideNav.classList.remove('active');
-            });
-        });
-    </script>
 </body>
 </html>
