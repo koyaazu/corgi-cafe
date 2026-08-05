@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>看板犬について｜DOG CAFE｜with Corgi</title>
+  <style>
+    /* サイト共通背景（マーブル波模様） */
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(-45deg, #e0f2fe, #bae6fd, #f0f9ff, #ffffff);
+      background-size: 400% 400%;
+      animation: waveGradient 15s ease infinite;
+      font-family: "Helvetica Neue", Arial, "ヒラギノ角ゴ Pro W3", sans-serif;
+      color: #333333;
+    }
+
+    @keyframes waveGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ヘッダー */
+    header {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 102, 204, 0.05);
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #1e3a8a;
+      text-decoration: none;
+    }
+
+    .global-nav ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 20px;
+    }
+
+    .global-nav a {
+      text-decoration: none;
+      color: #1e3a8a;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .global-nav a:hover {
+      color: #0284c7;
+    }
+
+    /* メインコンテナ */
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .page-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .paw-title {
+      position: relative;
+      display: inline-block;
+      padding-left: 35px;
+      font-size: 2rem;
+      color: #1e3a8a;
+    }
+
+    .paw-title::before {
+      content: '🐾';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%) rotate(-15deg);
+      font-size: 1.5rem;
+      opacity: 0.85;
+    }
+
+    /* 1セットのカード（ポラロイド＋手紙） */
+    .dog-card-pair {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      margin-bottom: 50px;
+    }
+
+    /* 左右交代レイアウト（偶数番目を反転） */
+    .dog-card-pair:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    /* ポラロイド枠（写真飛び出しギミック） */
+    .polaroid-frame {
+      flex: 4;
+      background: #ffffff;
+      padding: 12px 12px 35px 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      border-radius: 6px;
+      position: relative;
+      overflow: visible; /* 飛び出し許可 */
+      text-align: center;
+    }
+
+    .polaroid-frame img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* マウスホバーで写真がひょっこり飛び出す！ */
+    .polaroid-frame:hover img {
+      transform: scale(1.1) translateY(-10px);
+    }
+
+    .polaroid-caption {
+      margin-top: 10px;
+      font-family: "Georgia", serif;
+      font-weight: bold;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    /* 手紙風テキスト枠（ベージュ・ざらつき質感） */
+    .letter-box {
+      flex: 6;
+      background: #fdfbf7; /* 手紙風ベージュ */
+      border: 1px solid #e7e0d3;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.02), 0 5px 15px rgba(0,0,0,0.05);
+      border-radius: 12px;
+      padding: 25px 30px;
+      position: relative;
+    }
+
+    /* 手紙の上部デザイン線 */
+    .letter-box::before {
+      content: '';
+      position: absolute;
+      top: 10px; left: 10px; right: 10px; bottom: 10px;
+      border: 1px dashed #d6cbba; /* 点線便せん風 */
+      pointer-events: none;
+      border-radius: 8px;
+    }
+
+    .dog-name {
+      font-size: 1.5rem;
+      color: #1e3a8a;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .letter-content {
+      line-height: 1.8;
+      font-size: 0.98rem;
+      color: #444;
+    }
+
+    /* ふわっと表示 */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* レスポンシブ */
+    @media screen and (max-width: 768px) {
+      .dog-card-pair, .dog-card-pair:nth-child(even) {
+        flex-direction: column;
+      }
+      .polaroid-frame, .letter-box { width: 100%; box-sizing: border-box; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">DOG CAFE｜with Corgi</a>
+      <nav class="global-nav">
+        <ul>
+          <li><a href="index.html">ホーム</a></li>
+          <li><a href="dogs.html">看板犬について</a></li>
+          <li><a href="news.html">お知らせ</a></li>
+          <li><a href="access.html">アクセス</a></li>
+          <li><a href="contact.html">お問い合わせ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="page-title fade-in">
+      <h1 class="paw-title">看板犬のご紹介</h1>
+    </div>
+
+    <!-- 1セット目：寿々彦（左：写真 / 右：手紙） -->
+    <div class="dog-card-pair fade-in">
+      <div class="polaroid-frame">
+        <img src="https://images.unsplash.com/photo-1612536057832-2ff7ead7819c?auto=format&fit=crop&w=600&q=80" alt="寿々彦">
+        <div class="polaroid-caption">Suzuhiko / 寿々彦</div>
+      </div>
+      <div class="letter-box">
+        <h2 class="dog-name">寿々彦（すずひこ）</h2>
+        <div class="letter-content">
+          <p>【性格】マイペースでおっとり食いしん坊</p>
+          <p>カフェのメイン看板犬！お客様が席につくと、静かに足元へ寄り添ってナデナデを待つのが日課です。おやつを見つめる真剣な眼ざしと、自慢のプリプリお尻（桃尻）でみなさんを癒します♪</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2セット目：ナナ（左：手紙 / 右：写真） -->
+    <div class="dog-card-pair fade-in">
+      <div class="polaroid-frame">
+        <img src="https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=600&q=80" alt="ナナ">
+        <div class="polaroid-caption">Nana / ナナ</div>
+      </div>
+      <div class="letter-box">
+        <h2 class="dog-name">ナナ（先代看板犬）</h2>
+        <div class="letter-content">
+          <p>【性格】賢くて優しい、永遠の永遠のレディ</p>
+          <p>当カフェの『永遠の名誉店長』。いつも店内を優しく見守ってくれていた、天国からのアンバサダーです。店内にはナナの思い出写真コーナーもあり、今でも多くのファンに愛されています。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3セット目：コーギーの魅力（左：写真 / 右：手紙） -->
+    <div class="dog-card-pair fade-in">
+      <div class="polaroid-frame">
+        <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=600&q=80" alt="コーギーの魅力">
+        <div class="polaroid-caption">About Corgi</div>
+      </div>
+      <div class="letter-box">
+        <h2 class="dog-name">コーギーってどんな犬？</h2>
+        <div class="letter-content">
+          <p>大きな耳、短い足、そして豊かな表情！元々は牧羊犬として活躍していたため、とっても賢く好奇心旺盛です。カフェではコーギー特有のしっぽや歩き方の可愛さを間近で体験していただけます。</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const handleScroll = () => {
+      fadeElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.85) {
+          el.classList.add('visible');
+        }
+      });
+    };
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('load', handleScroll);
+  </script>
+
+</body>
+</html>
