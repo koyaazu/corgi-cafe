@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お知らせ｜DOG CAFE｜with Corgi</title>
+  <style>
+    /* ==========================================
+       1. サイト共通背景（ゆらゆら動くマーブル波模様）
+    ========================================== */
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(-45deg, #e0f2fe, #bae6fd, #f0f9ff, #ffffff);
+      background-size: 400% 400%;
+      animation: waveGradient 15s ease infinite;
+      font-family: "Helvetica Neue", Arial, "ヒラギノ角ゴ Pro W3", sans-serif;
+      color: #333333;
+    }
+
+    @keyframes waveGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ==========================================
+       2. ナビゲーションヘッダー
+    ========================================== */
+    header {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 102, 204, 0.05);
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #1e3a8a;
+      text-decoration: none;
+    }
+
+    .global-nav ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 20px;
+    }
+
+    .global-nav a {
+      text-decoration: none;
+      color: #1e3a8a;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .global-nav a:hover {
+      color: #0284c7;
+    }
+
+    /* ==========================================
+       3. メインコンテナ
+    ========================================== */
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .page-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .paw-title {
+      position: relative;
+      display: inline-block;
+      padding-left: 35px;
+      font-size: 2rem;
+      color: #1e3a8a;
+    }
+
+    .paw-title::before {
+      content: '🐾';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%) rotate(-15deg);
+      font-size: 1.5rem;
+      opacity: 0.85;
+    }
+
+    /* ==========================================
+       4. お知らせアコーディオンリスト（ツヤっと光る演出付き）
+    ========================================== */
+    .news-accordion {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .news-item-card {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0, 102, 204, 0.05);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    /* 1行ヘッダー（タイトル部分） */
+    .news-header {
+      padding: 20px 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 1行の左側構成（日付＋タイトル） */
+    .news-header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex: 1;
+    }
+
+    .news-date {
+      font-weight: bold;
+      color: #0284c7;
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+
+    .news-title {
+      font-weight: bold;
+      color: #1e3a8a;
+      font-size: 1.05rem;
+    }
+
+    /* カテゴリータグ */
+    .news-tag {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      white-space: nowrap;
+      margin-left: 15px;
+    }
+
+    .tag-event { background-color: #e0f2fe; color: #0284c7; }
+    .tag-schedule { background-color: #fef3c7; color: #d97706; }
+    .tag-blog { background-color: #fce7f3; color: #db2777; }
+
+    /* 開閉用の矢印アイコン */
+    .arrow-icon {
+      font-size: 0.9rem;
+      color: #0284c7;
+      transition: transform 0.3s ease;
+      margin-left: 15px;
+    }
+
+    /* ★ツヤっと光沢が走るアクティブ＆ホバー演出 */
+    .news-header::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 50%; height: 100%;
+      background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 100%);
+      transform: skewX(-25deg);
+      pointer-events: none;
+    }
+
+    .news-header:hover::after,
+    .news-item-card.active .news-header::after {
+      animation: shineGlow 0.8s ease-out;
+    }
+
+    @keyframes shineGlow {
+      100% { left: 200%; }
+    }
+
+    /* 選択（アクティブ）時のスタイル */
+    .news-item-card.active {
+      border-color: #0284c7;
+      box-shadow: 0 8px 25px rgba(2, 132, 199, 0.15);
+    }
+
+    .news-item-card.active .arrow-icon {
+      transform: rotate(180deg);
+    }
+
+    /* ==========================================
+       5. アコーディオン本文（手紙風ベージュ枠）
+    ========================================== */
+    .news-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-in-out, padding 0.3s ease;
+      background: #fdfbf7; /* 手紙風ベージュ */
+      border-top: 1px dashed #e7e0d3;
+    }
+
+    .news-body-content {
+      padding: 25px;
+      line-height: 1.8;
+      color: #444;
+      font-size: 0.98rem;
+    }
+
+    .report-img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-top: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    /* ふわっと表示 */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* レスポンシブ対応 */
+    @media screen and (max-width: 768px) {
+      .news-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .news-header-left { flex-direction: column; align-items: flex-start; gap: 5px; }
+      .news-tag { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ナビゲーション -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">DOG CAFE｜with Corgi</a>
+      <nav class="global-nav">
+        <ul>
+          <li><a href="index.html">ホーム</a></li>
+          <li><a href="about.html">お店について</a></li>
+          <li><a href="news.html">お知らせ</a></li>
+          <li><a href="access.html">アクセス</a></li>
+          <li><a href="contact.html">お問い合わせ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="page-title fade-in">
+      <h1 class="paw-title">お知らせ一覧</h1>
+    </div>
+
+    <ul class="news-accordion fade-in">
+
+      <!-- トピックス 1 -->
+      <li class="news-item-card">
+        <div class="news-header" onclick="toggleAccordion(this)">
+          <div class="news-header-left">
+            <span class="news-date">2026.07.28</span>
+            <span class="news-title">8月の営業スケジュールを更新しました！</span>
+          </div>
+          <div>
+            <span class="news-tag tag-schedule">営業案内</span>
+            <span class="arrow-icon">▼</span>
+          </div>
+        </div>
+        <div class="news-body">
+          <div class="news-body-content">
+            <p>いつも当店をご利用いただきありがとうございます。8月の営業カレンダーを更新いたしました。</p>
+            <p>8月は休まず営業いたします！夏休み期間中は大変混雑が予想されますので、お席のご予約をおすすめしております。皆様のご来店を心よりお待ちしております。</p>
+          </div>
+        </div>
+      </li>
+
+      <!-- トピックス 2 -->
+      <li class="news-item-card">
+        <div class="news-header" onclick="toggleAccordion(this)">
+          <div class="news-header-left">
+            <span class="news-date">2026.07.12</span>
+            <span class="news-title">看板犬コーギー・お誕生日会レポートを更新しました！</span>
+          </div>
+          <div>
+            <span class="news-tag tag-event">イベント</span>
+            <span class="arrow-icon">▼</span>
+          </div>
+        </div>
+        <div class="news-body">
+          <div class="news-body-content">
+            <p>先日開催いたしました、看板犬・寿々彦のお誕生日会の様子をお届けします！</p>
+            <p>たくさんのワンちゃんとお客さまにお祝いしていただき、寿々彦も特製ワンコケーキにご満悦でした♪ ご参加いただいた皆様、本当にありがとうございました！</p>
+            <img src="https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=800&q=80" alt="お誕生日会の様子" class="report-img">
+          </div>
+        </div>
+      </li>
+
+      <!-- トピックス 3 -->
+      <li class="news-item-card">
+        <div class="news-header" onclick="toggleAccordion(this)">
+          <div class="news-header-left">
+            <span class="news-date">2026.06.28</span>
+            <span class="news-title">7月の営業スケジュールを更新しました！</span>
+          </div>
+          <div>
+            <span class="news-tag tag-schedule">営業案内</span>
+            <span class="arrow-icon">▼</span>
+          </div>
+        </div>
+        <div class="news-body">
+          <div class="news-body-content">
+            <p>7月の営業スケジュールをお知らせいたします。</p>
+            <p>海辺のテラス席がとても心地よい季節になりました。夏の新作カフェメニューも登場いたしますので、ぜひ愛犬と一緒に遊びにいらしてくださいね。</p>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+
+  <!-- アコーディオン開閉＆スクロールJavaScript -->
+  <script>
+    function toggleAccordion(element) {
+      const card = element.parentElement;
+      const body = card.querySelector('.news-body');
+
+      // 他のカードを閉じる場合はここを調整（今回は複数開けるスタイル）
+      if (card.classList.contains('active')) {
+        card.classList.remove('active');
+        body.style.maxHeight = null;
+      } else {
+        card.classList.add('active');
+        body.style.maxHeight = body.scrollHeight + "px";
+      }
+    }
+
+    // ふわっと表示
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const handleScroll = () => {
+      fadeElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.85) {
+          el.classList.add('visible');
+        }
+      });
+    };
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('load', handleScroll);
+  </script>
+
+</body>
+</html>
