@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お問い合わせ・ご予約｜DOG CAFE｜with Corgi</title>
+  <style>
+    /* 1. サイト共通背景（ゆらゆら動くマーブル波模様） */
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(-45deg, #e0f2fe, #bae6fd, #f0f9ff, #ffffff);
+      background-size: 400% 400%;
+      animation: waveGradient 15s ease infinite;
+      font-family: "Helvetica Neue", Arial, "ヒラギノ角ゴ Pro W3", sans-serif;
+      color: #333333;
+    }
+
+    @keyframes waveGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* 2. ナビゲーションヘッダー */
+    header {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 102, 204, 0.05);
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #1e3a8a;
+      text-decoration: none;
+    }
+
+    .global-nav ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 20px;
+    }
+
+    .global-nav a {
+      text-decoration: none;
+      color: #1e3a8a;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .global-nav a:hover {
+      color: #0284c7;
+    }
+
+    /* 3. メインコンテナ */
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .page-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .paw-title {
+      position: relative;
+      display: inline-block;
+      padding-left: 35px;
+      font-size: 2rem;
+      color: #1e3a8a;
+    }
+
+    .paw-title::before {
+      content: '🐾';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%) rotate(-15deg);
+      font-size: 1.5rem;
+      opacity: 0.85;
+    }
+
+    /* 4. 神戸マリン手紙風カード（3段共通） */
+    .letter-card {
+      background: #fdfbf7;
+      border: 1px solid #e7e0d3;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.02), 0 8px 25px rgba(0, 102, 204, 0.08);
+      border-radius: 16px;
+      padding: 35px;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .letter-card::before {
+      content: '';
+      position: absolute;
+      top: 10px; left: 10px; right: 10px; bottom: 10px;
+      border: 1px dashed #d6cbba;
+      pointer-events: none;
+      border-radius: 12px;
+    }
+
+    .card-heading {
+      font-size: 1.5rem;
+      color: #1e3a8a;
+      margin-top: 0;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* カレンダーエリア */
+    .calendar-wrapper {
+      overflow-x: auto;
+      margin-bottom: 25px;
+    }
+
+    .calendar-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      background: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .calendar-table th {
+      background: #0284c7;
+      color: #ffffff;
+      padding: 10px 5px;
+      font-size: 0.85rem;
+    }
+
+    .calendar-table td {
+      padding: 12px 5px;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    .status-ok { color: #0284c7; cursor: pointer; }
+    .status-few { color: #d97706; cursor: pointer; }
+    .status-ng { color: #94a3b8; }
+
+    /* 予約フォーム */
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      color: #1e3a8a;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 1rem;
+      background: #ffffff;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 20px;
+    }
+
+    .form-row .form-group { flex: 1; }
+
+    /* アクションボタン */
+    .btn-submit {
+      display: inline-block;
+      width: 100%;
+      background: linear-gradient(135deg, #0284c7, #1e3a8a);
+      color: #ffffff;
+      border: none;
+      padding: 15px;
+      border-radius: 25px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2deg);
+      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
+    }
+
+    .btn-email {
+      display: inline-block;
+      background: linear-gradient(135deg, #0284c7, #1e3a8a);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: bold;
+      margin-top: 15px;
+      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-email:hover {
+      transform: translateY(-2deg);
+      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
+    }
+
+    /* ふわっと表示 */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media screen and (max-width: 768px) {
+      .form-row { flex-direction: column; gap: 0; }
+      .letter-card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ナビゲーション -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">DOG CAFE｜with Corgi</a>
+      <nav class="global-nav">
+        <ul>
+          <li><a href="index.html">ホーム</a></li>
+          <li><a href="about.html">お店について</a></li>
+          <li><a href="news.html">お知らせ</a></li>
+          <li><a href="access.html">アクセス</a></li>
+          <li><a href="contact.html">お問い合わせ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="page-title fade-in">
+      <h1 class="paw-title">お問い合わせ・ご予約</h1>
+    </div>
+
+    <!-- 1段目：お席予約（カレンダー＆フォーム） -->
+    <div class="letter-card fade-in">
+      <h2 class="card-heading">☕ カフェお席のご予約</h2>
+      <p style="text-align: left; margin-bottom: 20px;">2週間先までの空き状況をご確認いただけます。ご希望の日時を選択の上、ご予約情報をご入力ください。</p>
+
+      <!-- 2週間空き状況カレンダー -->
+      <div class="calendar-wrapper">
+        <table class="calendar-table">
+          <thead>
+            <tr>
+              <th>日付</th>
+              <th>8/7(金)</th><th>8/8(土)</th><th>8/9(日)</th><th>8/10(月)</th><th>8/11(火)</th><th>8/12(水)</th><th>8/13(木)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>10:00~</td>
+              <td class="status-ok">〇</td><td class="status-few">△</td><td class="status-ng">✕</td><td class="status-ok">〇</td><td class="status-ok">〇</td><td class="status-few">△</td><td class="status-ok">〇</td>
+            </tr>
+            <tr>
+              <td>12:00~</td>
+              <td class="status-few">△</td><td class="status-ng">✕</td><td class="status-ng">✕</td><td class="status-few">△</td><td class="status-ok">〇</td><td class="status-ok">〇</td><td class="status-few">△</td>
+            </tr>
+            <tr>
+              <td>14:00~</td>
+              <td class="status-ok">〇</td><td class="status-few">△</td><td class="status-few">△</td><td class="status-ok">〇</td><td class="status-ok">〇</td><td class="status-ok">〇</td><td class="status-ok">〇</td>
+            </tr>
+            <tr>
+              <td>16:00~</td>
+              <td class="status-ok">〇</td><td class="status-ok">〇</td><td class="status-few">△</td><td class="status-ok">〇</td><td class="status-ok">〇</td><td class="status-ok">〇</td><td class="status-ok">〇</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- フォーム -->
+      <form onsubmit="alert('ご予約リクエストを受け付けました！'); return false;">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="res-date">ご希望日</label>
+            <input type="date" id="res-date" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="res-time">ご希望時間帯（30分単位 / 10:00〜18:00）</label>
+            <select id="res-time" class="form-control" required>
+              <option value="">時間帯を選択してください</option>
+              <option value="10:00">10:00</option><option value="10:30">10:30</option>
+              <option value="11:00">11:00</option><option value="11:30">11:30</option>
+              <option value="12:00">12:00</option><option value="12:30">12:30</option>
+              <option value="13:00">13:00</option><option value="13:30">13:30</option>
+              <option value="14:00">14:00</option><option value="14:30">14:30</option>
+              <option value="15:00">15:00</option><option value="15:30">15:30</option>
+              <option value="16:00">16:00</option><option value="16:30">16:30</option>
+              <option value="17:00">17:00</option><option value="17:30">17:30</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">お名前</label>
+            <input type="text" id="name" class="form-control" placeholder="コーギー 太郎" required>
+          </div>
+          <div class="form-group">
+            <label for="people">ご来店人数</label>
+            <select id="people" class="form-control" required>
+              <option value="1">1名様</option>
+              <option value="2">2名様</option>
+              <option value="3">3名様</option>
+              <option value="4以上">4名様以上</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="dogs">同行する愛犬の頭数・犬種</label>
+            <input type="text" id="dogs" class="form-control" placeholder="例：コーギー 1頭、トイプードル 1頭">
+          </div>
+          <div class="form-group">
+            <label for="allergy">アレルギーの有無（人・ワンちゃん）</label>
+            <input type="text" id="allergy" class="form-control" placeholder="例：小麦アレルギーあり、特になし">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">上記の内容でお席を予約する</button>
+      </form>
+    </div>
+
+    <!-- 2段目：出張ふれあいサービスのご相談 -->
+    <div class="letter-card fade-in" style="text-align: center;">
+      <h2 class="card-heading" style="justify-content: center;">🐾 出張ふれあいサービスのご相談</h2>
+      <p>当店では、高齢者施設や幼稚園などへの「出張ふれあいサービス」のご相談も承っております。</p>
+      <p>訪問スケジュールや内容のご希望は、下記メールフォームよりお気軽にご連絡ください。</p>
+      
+      <!-- メールソフト起動ボタン -->
+      <a href="mailto:info@kobe-corgi-cafe.example.com?subject=出張ふれあいサービスの相談について" class="btn-email">
+        ✉ 相談メールはこちらから
+      </a>
+    </div>
+
+    <!-- 3段目：その他のご相談 -->
+    <div class="letter-card fade-in" style="text-align: center;">
+      <h2 class="card-heading" style="justify-content: center;">✉ その他のご相談</h2>
+      <p>貸し切りイベントのご相談や取材・その他お問い合わせにつきましては、下記よりお気軽にお問い合わせください。</p>
+      
+      <!-- メールソフト起動ボタン -->
+      <a href="mailto:info@kobe-corgi-cafe.example.com?subject=その他の相談について" class="btn-email">
+        ✉ その他の相談メールはこちらから
+      </a>
+    </div>
+
+  </div>
+
+  <script>
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const handleScroll = () => {
+      fadeElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.85) {
+          el.classList.add('visible');
+        }
+      });
+    };
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('load', handleScroll);
+  </script>
+
+</body>
+</html>
