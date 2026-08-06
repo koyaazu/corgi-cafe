@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>アクセス｜DOG CAFE｜with Corgi</title>
+  <style>
+    /* ==========================================
+       1. サイト共通背景（ゆらゆら動くマーブル波模様）
+    ========================================== */
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(-45deg, #e0f2fe, #bae6fd, #f0f9ff, #ffffff);
+      background-size: 400% 400%;
+      animation: waveGradient 15s ease infinite;
+      font-family: "Helvetica Neue", Arial, "ヒラギノ角ゴ Pro W3", sans-serif;
+      color: #333333;
+    }
+
+    @keyframes waveGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ==========================================
+       2. ナビゲーションヘッダー
+    ========================================== */
+    header {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 102, 204, 0.05);
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #1e3a8a;
+      text-decoration: none;
+    }
+
+    .global-nav ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 20px;
+    }
+
+    .global-nav a {
+      text-decoration: none;
+      color: #1e3a8a;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .global-nav a:hover {
+      color: #0284c7;
+    }
+
+    /* ==========================================
+       3. メインコンテナ
+    ========================================== */
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .page-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .paw-title {
+      position: relative;
+      display: inline-block;
+      padding-left: 35px;
+      font-size: 2rem;
+      color: #1e3a8a;
+    }
+
+    .paw-title::before {
+      content: '🐾';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%) rotate(-15deg);
+      font-size: 1.5rem;
+      opacity: 0.85;
+    }
+
+    /* ==========================================
+       4. 手紙風カード（ベージュ＆点線便せん）
+    ========================================== */
+    .letter-card {
+      background: #fdfbf7;
+      border: 1px solid #e7e0d3;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.02), 0 8px 25px rgba(0, 102, 204, 0.08);
+      border-radius: 16px;
+      padding: 30px 35px;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .letter-card::before {
+      content: '';
+      position: absolute;
+      top: 10px; left: 10px; right: 10px; bottom: 10px;
+      border: 1px dashed #d6cbba;
+      pointer-events: none;
+      border-radius: 12px;
+    }
+
+    .card-heading {
+      font-size: 1.4rem;
+      color: #1e3a8a;
+      margin-top: 0;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* 地図埋め込みエリア */
+    .map-wrapper {
+      width: 100%;
+      height: 320px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin-top: 15px;
+    }
+
+    .map-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* 駐車場リスト＆ピクトグラム */
+    .parking-notice {
+      background: #f1f5f9;
+      border-left: 4px solid #0284c7;
+      padding: 12px 18px;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      color: #334155;
+      margin-bottom: 20px;
+    }
+
+    .parking-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .parking-item {
+      padding: 12px 0;
+      border-bottom: 1px dashed #d6cbba;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .parking-item:last-child {
+      border-bottom: none;
+    }
+
+    .parking-badge {
+      background: #0284c7;
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: bold;
+      padding: 3px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+
+    /* カフェルールピクトグラムリスト */
+    .rule-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 15px;
+    }
+
+    .rule-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      display: flex;
+      gap: 15px;
+      align-items: flex-start;
+    }
+
+    .rule-icon {
+      font-size: 1.8rem;
+      line-height: 1;
+    }
+
+    .rule-title {
+      font-weight: bold;
+      color: #1e3a8a;
+      margin: 0 0 5px 0;
+      font-size: 1rem;
+    }
+
+    .rule-desc {
+      font-size: 0.88rem;
+      color: #555;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* ふわっと表示 */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media screen and (max-width: 768px) {
+      .rule-grid { grid-template-columns: 1fr; }
+      .letter-card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ナビゲーション -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">DOG CAFE｜with Corgi</a>
+      <nav class="global-nav">
+        <ul>
+          <li><a href="index.html">ホーム</a></li>
+          <li><a href="about.html">お店について</a></li>
+          <li><a href="news.html">お知らせ</a></li>
+          <li><a href="access.html">アクセス</a></li>
+          <li><a href="contact.html">お問い合わせ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="page-title fade-in">
+      <h1 class="paw-title">アクセス・カフェルール</h1>
+    </div>
+
+    <!-- 1. 店舗所在地＆Googleマップ -->
+    <div class="letter-card fade-in">
+      <h2 class="card-heading">📍 店舗情報・アクセスマップ</h2>
+      <p><strong>【所在地】</strong> 兵庫県神戸市中央区新港町（GLION ARENA KOBE 隣接広場）</p>
+      <p>潮風が吹き抜ける海辺の絶景ロケーションでお待ちしております。</p>
+      
+      <!-- Google Map 操作可能エリア（GLION ARENA KOBE付近を設定） -->
+      <div class="map-wrapper">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3281.25875225092!2d135.1965!3d34.6815!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60008ef5b5b5b5b5%3A0x123456789abcdef!2zR0xJT04gQVJFTkEgS09CRQ!5e0!3m2!1sja!2sjp!4v1700000000000" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+    </div>
+
+    <!-- 2. 駐車場のご案内 -->
+    <div class="letter-card fade-in">
+      <h2 class="card-heading">🚗 駐車場について</h2>
+      <div class="parking-notice">
+        ※当店専用の駐車場はございません。お車でお越しのお客様は、恐れ入りますが近隣のパーキングをご利用ください。
+      </div>
+
+      <ul class="parking-list">
+        <li class="parking-item">
+          <span class="parking-badge">タイムズ</span>
+          <div>
+            <strong>タイムズ神戸新港町</strong>
+            <div style="font-size:0.88rem; color:#666;">店舗まで徒歩約3分 / 最寄りのコインパーキングです。</div>
+          </div>
+        </li>
+        <li class="parking-item">
+          <span class="parking-badge">タイムズ</span>
+          <div>
+            <strong>タイムズメリケンパーク南</strong>
+            <div style="font-size:0.88rem; color:#666;">店舗まで徒歩約6分 / 海沿いをお散歩しながらご来店いただけます。</div>
+          </div>
+        </li>
+        <li class="parking-item">
+          <span class="parking-badge">大型立体</span>
+          <div>
+            <strong>神戸市営新港町駐車場（またはアリーナ隣接大型立体駐車場）</strong>
+            <div style="font-size:0.88rem; color:#666;">店舗まで徒歩約2分 / 収容台数が多く、大型車や長時間の滞在にも便利です。</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 3. 愛犬と同伴する際のカフェルール -->
+    <div class="letter-card fade-in">
+      <h2 class="card-heading">🐶 愛犬と同伴する際のカフェルール</h2>
+      <p>皆さまとワンちゃんが安全で快適な時間を過ごせるよう、ご協力をお願いいたします。</p>
+
+      <div class="rule-grid">
+        <div class="rule-item">
+          <div class="rule-icon">🦮</div>
+          <div>
+            <h3 class="rule-title">リードの着用（必須）</h3>
+            <p class="rule-desc">店内・テラス席ともに、安全のため必ずリードの着用をお願いいたします。</p>
+          </div>
+        </div>
+
+        <div class="rule-item">
+          <div class="rule-icon">🎀</div>
+          <div>
+            <h3 class="rule-title">ヒート中のワンちゃんについて</h3>
+            <p class="rule-desc">ヒート（生理）中およびヒート終了後2週間以内のワンちゃんのご利用はご遠慮いただいております。</p>
+          </div>
+        </div>
+
+        <div class="rule-item">
+          <div class="rule-icon">☕</div>
+          <div>
+            <h3 class="rule-title">テラス席での過ごし方</h3>
+            <p class="rule-desc">開放的な空間で海を眺めながらお過ごしいただけます。テーブルへの足をかけはご遠慮ください。</p>
+          </div>
+        </div>
+
+        <div class="rule-item">
+          <div class="rule-icon">🏠</div>
+          <div>
+            <h3 class="rule-title">店内での過ごし方</h3>
+            <p class="rule-desc">マナーパンツ・マナーベルトの着用にご協力をお願いいたします。イスに載せる際はカフェマットをご利用ください。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const handleScroll = () => {
+      fadeElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.85) {
+          el.classList.add('visible');
+        }
+      });
+    };
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('load', handleScroll);
+  </script>
+
+</body>
+</html>
